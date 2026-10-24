@@ -1,73 +1,75 @@
-'use client';
+'use client'
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { login } from '@/lib/auth-actions';
+import Link from 'next/link';
 
 export default function LoginPage() {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   async function handleSubmit(formData: FormData) {
-    setLoading(true);
-    setError(null);
-    const result = await login(formData);
-    if (result?.error) {
-      setError(result.error);
-    }
-    setLoading(false);
+    const res = await login(formData);
+    if (res?.error) setError(res.error);
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-        <h1 className="text-2xl font-bold mb-2">Iniciar sesión</h1>
-        <p className="text-gray-600 mb-6">Accedé al panel de clientes.</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#F1F3F5] p-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
+        
+        {/* Encabezado de Marca */}
+        <div className="bg-[#0A2540] p-6 text-center">
+          <h1 className="text-3xl font-bold text-white">
+            ENC <span className="text-[#E63946]">Logística</span>
+          </h1>
+          <p className="text-gray-300 text-sm mt-2">Panel de Control</p>
+        </div>
 
-        <form action={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="w-full border rounded px-3 py-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="password">
-              Contraseña
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className="w-full border rounded px-3 py-2"
-            />
-          </div>
+        <div className="p-8">
+          <h2 className="text-xl font-bold text-[#0A2540] mb-6 text-center">Iniciar Sesión</h2>
+          
+          {error && (
+            <div className="bg-red-50 text-[#E63946] p-3 rounded mb-4 text-sm text-center">
+              {error}
+            </div>
+          )}
 
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          <form action={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+              <input 
+                name="email" 
+                type="email" 
+                required 
+                className="mt-1 block w-full border border-gray-300 rounded p-2 focus:ring-[#E63946] focus:border-[#E63946]" 
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 disabled:opacity-50"
-          >
-            {loading ? 'Entrando...' : 'Entrar'}
-          </button>
-        </form>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Contraseña</label>
+              <input 
+                name="password" 
+                type="password" 
+                required 
+                className="mt-1 block w-full border border-gray-300 rounded p-2 focus:ring-[#E63946] focus:border-[#E63946]" 
+              />
+            </div>
 
-        <p className="text-sm text-gray-600 mt-4">
-          ¿No tenés cuenta?{' '}
-          <Link href="/register" className="text-blue-600 hover:underline">
-            Registrate
-          </Link>
-        </p>
+            <button 
+              type="submit" 
+              className="w-full bg-[#0A2540] text-white font-bold p-3 rounded hover:bg-[#06192b] transition-colors"
+            >
+              Ingresar
+            </button>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-gray-600">
+            ¿No tienes cuenta?{' '}
+            <Link href="/register" className="text-[#E63946] font-bold hover:underline">
+              Regístrate aquí
+            </Link>
+          </p>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
