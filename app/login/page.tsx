@@ -16,7 +16,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-[#F1F3F5] p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="bg-[#0A2540] p-6 text-center flex flex-col items-center">
-          <img src="/logo.png" alt="ENC Logística" className="h-24 w-auto mb-2" />
+          <img src="/logo.png" alt="ENC Logística" className="h-16 w-auto object-contain mb-2" />
           <h1 className="text-3xl font-bold text-white">
             ENC <span className="text-[#E63946]">Logística</span>
           </h1>
