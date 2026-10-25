@@ -18,7 +18,7 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-[#F1F3F5] p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="bg-[#0A2540] p-8 text-center flex flex-col items-center">
-          <img src="/alas.png" alt="ENC Logística" className="h-24 w-auto object-contain mb-4" />
+          <img src="/alas-blanca-transparente.png" alt="ENC Logística" className="h-24 w-auto object-contain mb-4" />
           <h1 className="text-3xl font-bold text-white">
             ENC <span className="text-[#E63946]">Logística</span>
           </h1>
