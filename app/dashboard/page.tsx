@@ -20,11 +20,13 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#F1F3F5] p-8 text-black">
       <div className="max-w-5xl mx-auto">
-        
         <header className="flex justify-between items-center mb-8 border-b-2 border-[#E63946] pb-4">
-          <h1 className="text-3xl font-bold text-[#0A2540]">
-            ENC <span className="text-[#E63946]">Logística</span>
-          </h1>
+          <div className="flex items-center gap-4">
+            <img src="/logo.png" alt="ENC Logística" className="h-16 w-auto" />
+            <h1 className="text-3xl font-bold text-[#0A2540]">
+              ENC <span className="text-[#E63946]">Logística</span>
+            </h1>
+          </div>
           <form action={logout}>
             <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
               Cerrar Sesión
@@ -98,8 +100,7 @@ export default async function DashboardPage() {
             </table>
           </div>
         </div>
-
       </div>
     </div>
   );
-} 
+}
