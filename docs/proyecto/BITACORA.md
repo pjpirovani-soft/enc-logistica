@@ -42,3 +42,13 @@
 
 - Se generó un dump completo con la documentación, estado del proyecto y pendientes.
 - El volcado fue copiado automáticamente al portapapeles para iniciar una nueva sesión con contexto completo.
+
+## 2026-10-25 â€” Fase 9: Estado Ausente + Reintento + Campos de entrega
+
+- **MigraciÃ³n SQL:** agregadas a tabla `paquetes` las columnas `observaciones`, `retirado_por`, `retirado_por_ci`, `intentos_entrega`, `fecha_entrega`, `fecha_ausente`. CHECK de `estado` ampliado a 4 valores (`En Ruta`, `Entregado`, `Ausente`, `Cancelado`).
+- **Server Actions:** `app/actions/paquetes.ts` reescrito con `crearPaquete` (restaurado), `marcarEntregado` (con C.I. y observaciones), `marcarAusente`, `reintentarEntrega`.
+- **UI:** nuevo componente `components/PaqueteAcciones.tsx` (client) con modales inline para Ausente y Entregar. `app/dashboard/page.tsx` actualizado con badges por estado y fix de encoding (adios `LogÃƒÂ­stica`).
+- **Deploy:** commit `1cf3f1c` (feat inicial) + `4cb7c63` (fix `crearPaquete`). Vercel deployado.
+- **VerificaciÃ³n:** paquete `TEST-620700` probado end-to-end en produccion. Estado final `Entregado` con `retirado_por='Ana Perez'`, `retirado_por_ci='1234567'`, `intentos_entrega=3`.
+- **Hallazgo:** los scripts de test en consola del navegador necesitan `wait` de 4s (no 2.5s) para que `revalidatePath` complete la propagacion.
+- **Deuda tecnica:** falta Fase 10 (campos de planilla: tipo_servicio enum, precio_cobro, tarifa_flete, comision_cobro, cobrado, foto_enviada, celular). Falta tope de 2 intentos + estado `'Devuelto'`.
