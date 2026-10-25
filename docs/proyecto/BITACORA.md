@@ -30,3 +30,10 @@
 - **Hallazgos:** 
   - Al usar Gmail SMTP, Supabase muestra una advertencia de "entregabilidad", pero el envío funciona correctamente (puede caer en Spam al principio).
   - Se configuraron las **Redirect URLs** en Supabase (`https://enc-logistica.vercel.app/**`) para que el enlace de confirmación del correo redirija correctamente en producción.
+
+## 2026-10-25 — Cierre de sesión y preparación de dump
+
+- Se integraron los 7 documentos operativos en `docs/negocio/`.
+- Se actualizaron `STATUS.md`, `ARCHITECTURE.md` y `SESSION-STATE.md`.
+- **Pendientes detectados:** Falta implementar el estado 'Ausente' (Protocolo de Reintento), campos de observaciones en la entrega, y limpieza de archivos del blueprint.
+- Se preparó el volcado de contexto para la próxima sesión.
