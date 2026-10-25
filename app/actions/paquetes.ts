@@ -123,3 +123,41 @@ export async function reintentarEntrega(paqueteId: string) {
   revalidatePath('/dashboard');
   return { ok: true as const };
 }
+// ============================================================
+// 0. CREAR PAQUETE (restaurado de ca8183c para no romper PaqueteForm)
+// ============================================================
+import { paqueteSchema, type PaqueteFormData } from '@/lib/schemas/paqueteSchema';
+
+export async function crearPaquete(formData: PaqueteFormData) {
+  const supabase = await createClient();
+
+  const validacion = paqueteSchema.safeParse(formData);
+  if (!validacion.success) {
+    return { error: 'Datos inválidos', detalles: validacion.error.flatten() };
+  }
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'No autorizado. Debes iniciar sesión.' };
+  }
+
+  const { data, error } = await supabase
+    .from('paquetes')
+    .insert([
+      {
+        ...validacion.data,
+        user_id: user.id,
+        estado: 'En Ruta',
+      },
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error al insertar paquete:', error);
+    return { error: 'Error al guardar en la base de datos' };
+  }
+
+  revalidatePath('/dashboard');
+  return { success: true, paquete: data };
+}
