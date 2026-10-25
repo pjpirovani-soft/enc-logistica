@@ -9,3 +9,7 @@ dist/
 .DS_Store
 # Next regenera esto en cada dev/build (no versionar)
 next-env.d.ts
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+*.tsbuildinfo
