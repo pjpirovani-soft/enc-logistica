@@ -7,7 +7,7 @@
 - **Base de Datos:** Supabase (PostgreSQL 15 + RLS).
 - **Autenticación:** Supabase Auth (Email/Password).
 - **Validación:** Zod (cliente y servidor).
-- **Correos:** Resend (SMTP personalizado).
+- **Correos:** Gmail SMTP (cuenta `contacto.enclogistica@gmail.com`) con Contraseña de Aplicación.
 
 ## Estructura de Base de Datos
 - **Tabla `perfiles`:** Vinculada a `auth.users`. Guarda el rol (admin/repartidor).
@@ -16,7 +16,7 @@
 ## Flujo de Autenticación
 1. El usuario se registra en `/register`.
 2. Supabase crea el usuario y dispara el trigger `handle_new_user` (crea el perfil con rol 'admin').
-3. Resend envía el correo de confirmación con la plantilla personalizada.
+3. Gmail envía el correo de confirmación con la plantilla personalizada.
 4. El usuario inicia sesión en `/login` y es redirigido a `/dashboard`.
 
 ## Flujo de Operación (Paquetes)
@@ -26,3 +26,6 @@
 4. Se inserta el paquete en Supabase (estado: 'En Ruta').
 5. Al hacer clic en "Entregar", se actualiza el estado a 'Entregado'.
 6. Aparece un botón de WhatsApp para avisar al cliente de Asunción.
+
+## Documentos de Negocio
+Toda la documentación operativa y comercial (contratos, planillas, protocolos, plan financiero) se encuentra en `docs/negocio/`.
