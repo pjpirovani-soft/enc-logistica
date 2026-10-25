@@ -37,3 +37,8 @@
 - Se actualizaron `STATUS.md`, `ARCHITECTURE.md` y `SESSION-STATE.md`.
 - **Pendientes detectados:** Falta implementar el estado 'Ausente' (Protocolo de Reintento), campos de observaciones en la entrega, y limpieza de archivos del blueprint.
 - Se preparó el volcado de contexto para la próxima sesión.
+
+## 2026-10-25 — Preparación de volcado de contexto
+
+- Se generó un dump completo con la documentación, estado del proyecto y pendientes.
+- El volcado fue copiado automáticamente al portapapeles para iniciar una nueva sesión con contexto completo.
