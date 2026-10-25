@@ -17,3 +17,16 @@
 - **Marca:** Se documentó la identidad visual en `docs/proyecto/MANUAL-MARCA.md` (Azul #0A2540, Rojo #E63946).
 - **UI/UX:** Se rediseñaron las páginas de Login, Registro, Home y Dashboard con la paleta de colores oficial. Se creó el componente `PaqueteForm.tsx` y la Server Action `crearPaquete`.
 - **Hallazgo:** Se evitó el uso de PowerShell para escribir código React (componentes) debido a problemas de escape con las llaves y template literals. Se usó VS Code directamente.
+
+## 2026-10-25 — Ajustes de Estética, Logos y Correos
+
+- **Logos:** Se estandarizaron los nombres de los archivos de imagen en `public/` para evitar confusiones:
+  - `alas-blanca-transparente.png` (fondo transparente, alas blancas). Usado en Login y Registro (fondos oscuros).
+  - `alas-azul-transparente.png` (fondo transparente, alas azules). Usado en el Dashboard (fondo claro).
+  - `logo-oficial.png` (logo completo). Reservado para correos o impresiones.
+  - Se eliminó el fondo blanco (cuadrado) que rompía la estética.
+- **Correos:** Se migró el SMTP de Resend a **Gmail** (`contacto.enclogistica@gmail.com`) usando una Contraseña de Aplicación, para permitir el envío a cualquier destinatario (Resend solo permitía enviar al correo dueño de la cuenta en su plan gratuito).
+- **Plantilla de Correo:** Se personalizó la plantilla en Supabase con los colores de la marca y el logo.
+- **Hallazgos:** 
+  - Al usar Gmail SMTP, Supabase muestra una advertencia de "entregabilidad", pero el envío funciona correctamente (puede caer en Spam al principio).
+  - Se configuraron las **Redirect URLs** en Supabase (`https://enc-logistica.vercel.app/**`) para que el enlace de confirmación del correo redirija correctamente en producción.

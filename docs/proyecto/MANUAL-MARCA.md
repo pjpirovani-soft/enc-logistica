@@ -28,3 +28,11 @@
 ## 5. Nota TÃ©cnica
 - La imagen generada por IA sirve como referencia visual.
 - Para imprimir en vehÃ­culos (Ractis), uniformes o cartelerÃ­a, se debe reconstruir el diseÃ±o en SVG o PDF vectorial y verificar que los colores sean exactos.
+## 6. Archivos de Imagen en el Proyecto (public/)
+Para mantener la consistencia, los archivos se han estandarizado de la siguiente manera:
+- `alas-blanca-transparente.png`: Alas en color blanco, fondo transparente. **Uso:** Login y Registro (fondos oscuros).
+- `alas-azul-transparente.png`: Alas en color azul marino, fondo transparente. **Uso:** Dashboard (fondo claro).
+- `alas-azul-fondo-blanco.png`: Alas en azul marino, fondo blanco. **Uso:** Reserva o documentos impresos.
+- `logo-oficial.png`: Logo completo (alas + texto ENC + Logística). **Uso:** Correos electrónicos, facturas o material impreso.
+
+**Regla:** Siempre usar la versión que tenga el mayor contraste posible con el fondo de la pantalla.
