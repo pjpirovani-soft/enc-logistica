@@ -22,7 +22,7 @@ export default async function DashboardPage() {
       <div className="max-w-5xl mx-auto">
         <header className="flex justify-between items-center mb-8 border-b-2 border-[#E63946] pb-4">
           <div className="flex items-center gap-3">
-            <img src="/alas.png" alt="ENC Logística" className="h-10 w-auto object-contain" />
+            <img src="/alas.png" alt="ENC Logística" className="h-12 w-auto object-contain" />
             <h1 className="text-3xl font-bold text-[#0A2540]">
               ENC <span className="text-[#E63946]">Logística</span>
             </h1>
