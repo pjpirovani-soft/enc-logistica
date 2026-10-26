@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister';
+import { InstallPrompt } from '@/components/InstallPrompt';
 
 export const metadata: Metadata = {
   title: {
-    default: 'ENC Logística',
-    template: '%s | ENC Logística',
+    default: 'ENC Logistica',
+    template: '%s | ENC Logistica',
   },
-  description: 'Logística de última milla en Encarnación, Paraguay.',
+  description: 'Logistica de ultima milla en Encarnacion, Paraguay.',
   manifest: '/site.webmanifest',
-  applicationName: 'ENC Logística',
+  applicationName: 'ENC Logistica',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -39,7 +41,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        {children}
+        <ServiceWorkerRegister />
+        <InstallPrompt />
+      </body>
     </html>
   );
 }
