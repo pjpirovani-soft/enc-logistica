@@ -3,10 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { paqueteSchema, type PaqueteFormData } from '@/lib/schemas/paqueteSchema';
 
-// ============================================================
-// Helpers
-// ============================================================
 async function requireUser() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -14,14 +12,33 @@ async function requireUser() {
   return { supabase, user };
 }
 
-// ============================================================
-// 1. ENTREGAR (con quién retiró + C.I. + observaciones)
-// ============================================================
+export async function crearPaquete(formData: PaqueteFormData) {
+  const supabase = await createClient();
+  const validacion = paqueteSchema.safeParse(formData);
+  if (!validacion.success) {
+    return { error: 'Datos invalidos', detalles: validacion.error.flatten() };
+  }
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: 'No autorizado. Debes iniciar sesion.' };
+  const { data, error } = await supabase
+    .from('paquetes')
+    .insert([{ ...validacion.data, user_id: user.id, estado: 'En Ruta' }])
+    .select()
+    .single();
+  if (error) {
+    console.error('Error al insertar paquete:', error);
+    return { error: 'Error al guardar en la base de datos' };
+  }
+  revalidatePath('/dashboard');
+  return { success: true, paquete: data };
+}
+
 const entregarSchema = z.object({
   paqueteId: z.string().uuid(),
-  retiradoPor: z.string().trim().min(2, 'Nombre del retirador demasiado corto').max(120),
-  retiradoPorCi: z.string().trim().min(5, 'C.I. inválida').max(20),
+  retiradoPor: z.string().trim().min(2).max(120),
+  retiradoPorCi: z.string().trim().min(5).max(20),
   observaciones: z.string().trim().max(500).optional().nullable(),
+  cobrado: z.boolean().default(false),
 });
 
 export type EntregarInput = z.infer<typeof entregarSchema>;
@@ -29,11 +46,9 @@ export type EntregarInput = z.infer<typeof entregarSchema>;
 export async function marcarEntregado(input: EntregarInput) {
   const parsed = entregarSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos inválidos' };
+    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos invalidos' };
   }
-
   const { supabase, user } = await requireUser();
-
   const { error } = await supabase
     .from('paquetes')
     .update({
@@ -42,19 +57,15 @@ export async function marcarEntregado(input: EntregarInput) {
       retirado_por_ci: parsed.data.retiradoPorCi,
       observaciones: parsed.data.observaciones ?? null,
       fecha_entrega: new Date().toISOString(),
+      cobrado: parsed.data.cobrado,
     })
     .eq('id', parsed.data.paqueteId)
     .eq('user_id', user.id);
-
   if (error) return { ok: false as const, error: error.message };
-
   revalidatePath('/dashboard');
   return { ok: true as const };
 }
 
-// ============================================================
-// 2. MARCAR AUSENTE
-// ============================================================
 const ausenteSchema = z.object({
   paqueteId: z.string().uuid(),
   observaciones: z.string().trim().max(500).optional().nullable(),
@@ -65,11 +76,9 @@ export type AusenteInput = z.infer<typeof ausenteSchema>;
 export async function marcarAusente(input: AusenteInput) {
   const parsed = ausenteSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos inválidos' };
+    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos invalidos' };
   }
-
   const { supabase, user } = await requireUser();
-
   const { error } = await supabase
     .from('paquetes')
     .update({
@@ -79,33 +88,41 @@ export async function marcarAusente(input: AusenteInput) {
     })
     .eq('id', parsed.data.paqueteId)
     .eq('user_id', user.id);
-
   if (error) return { ok: false as const, error: error.message };
-
   revalidatePath('/dashboard');
   return { ok: true as const };
 }
 
-// ============================================================
-// 3. REINTENTAR ENTREGA (Ausente -> En Ruta, +1 intento)
-// ============================================================
 export async function reintentarEntrega(paqueteId: string) {
   if (!z.string().uuid().safeParse(paqueteId).success) {
-    return { ok: false as const, error: 'ID inválido' };
+    return { ok: false as const, error: 'ID invalido' };
   }
-
   const { supabase, user } = await requireUser();
-
   const { data: pkg, error: fetchErr } = await supabase
     .from('paquetes')
     .select('intentos_entrega, estado')
     .eq('id', paqueteId)
     .eq('user_id', user.id)
     .single();
-
   if (fetchErr || !pkg) return { ok: false as const, error: 'Paquete no encontrado' };
   if (pkg.estado !== 'Ausente') {
     return { ok: false as const, error: 'Solo se pueden reintentar paquetes ausentes' };
+  }
+
+  // Tope de 2 intentos: si ya fallo 2 veces, se devuelve
+  if ((pkg.intentos_entrega ?? 1) >= 2) {
+    const { error } = await supabase
+      .from('paquetes')
+      .update({
+        estado: 'Devuelto',
+        devuelto_a_remitente: true,
+        fecha_ausente: null,
+      })
+      .eq('id', paqueteId)
+      .eq('user_id', user.id);
+    if (error) return { ok: false as const, error: error.message };
+    revalidatePath('/dashboard');
+    return { ok: true as const, devuelto: true };
   }
 
   const { error } = await supabase
@@ -117,47 +134,7 @@ export async function reintentarEntrega(paqueteId: string) {
     })
     .eq('id', paqueteId)
     .eq('user_id', user.id);
-
   if (error) return { ok: false as const, error: error.message };
-
   revalidatePath('/dashboard');
-  return { ok: true as const };
-}
-// ============================================================
-// 0. CREAR PAQUETE (restaurado de ca8183c para no romper PaqueteForm)
-// ============================================================
-import { paqueteSchema, type PaqueteFormData } from '@/lib/schemas/paqueteSchema';
-
-export async function crearPaquete(formData: PaqueteFormData) {
-  const supabase = await createClient();
-
-  const validacion = paqueteSchema.safeParse(formData);
-  if (!validacion.success) {
-    return { error: 'Datos inválidos', detalles: validacion.error.flatten() };
-  }
-
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return { error: 'No autorizado. Debes iniciar sesión.' };
-  }
-
-  const { data, error } = await supabase
-    .from('paquetes')
-    .insert([
-      {
-        ...validacion.data,
-        user_id: user.id,
-        estado: 'En Ruta',
-      },
-    ])
-    .select()
-    .single();
-
-  if (error) {
-    console.error('Error al insertar paquete:', error);
-    return { error: 'Error al guardar en la base de datos' };
-  }
-
-  revalidatePath('/dashboard');
-  return { success: true, paquete: data };
+  return { ok: true as const, devuelto: false };
 }

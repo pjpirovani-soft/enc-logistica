@@ -22,6 +22,7 @@ export default function PaqueteForm() {
       telefono: formData.get('telefono') as string,
       tipo_servicio: formData.get('tipo_servicio') as 'Normal' | 'Contra Entrega',
       monto_cobro: Number(formData.get('monto_cobro')) || 0,
+      tarifa_flete: Number(formData.get('tarifa_flete')) || 22000,
     };
 
     const res = await crearPaquete(data);
@@ -29,7 +30,7 @@ export default function PaqueteForm() {
     if (res.error) {
       setMensaje('Error: ' + res.error);
     } else {
-      setMensaje('¡Paquete registrado con éxito!');
+      setMensaje('Paquete registrado con exito');
       (e.target as HTMLFormElement).reset();
     }
     setLoading(false);
@@ -38,30 +39,30 @@ export default function PaqueteForm() {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md mb-8 text-black">
       <h2 className="text-xl font-bold mb-4 text-[#0A2540]">Registrar Nuevo Paquete</h2>
-      
+
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">N° de Guía</label>
+          <label className="block text-sm font-medium text-gray-700">N de Guia</label>
           <input name="nro_guia" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
         </div>
-        
+
         <div>
-          <label className="block text-sm font-medium text-gray-700">Cliente (Asunción)</label>
+          <label className="block text-sm font-medium text-gray-700">Cliente (Asuncion)</label>
           <input name="cliente_asuncion" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Destinatario (Encarnación)</label>
+          <label className="block text-sm font-medium text-gray-700">Destinatario (Encarnacion)</label>
           <input name="destinatario" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Dirección</label>
+          <label className="block text-sm font-medium text-gray-700">Direccion</label>
           <input name="direccion" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Teléfono</label>
+          <label className="block text-sm font-medium text-gray-700">Telefono</label>
           <input name="telefono" className="mt-1 block w-full border border-gray-300 rounded p-2" />
         </div>
 
@@ -78,9 +79,14 @@ export default function PaqueteForm() {
           <input name="monto_cobro" type="number" defaultValue={0} className="mt-1 block w-full border border-gray-300 rounded p-2" />
         </div>
 
-        <div className="flex items-end">
-          <button 
-            type="submit" 
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Tarifa Flete (Gs.)</label>
+          <input name="tarifa_flete" type="number" defaultValue={22000} className="mt-1 block w-full border border-gray-300 rounded p-2" />
+        </div>
+
+        <div className="flex items-end md:col-span-2">
+          <button
+            type="submit"
             disabled={loading}
             className="w-full bg-[#0A2540] text-white font-bold p-2 rounded hover:bg-[#06192b] disabled:opacity-50"
           >
