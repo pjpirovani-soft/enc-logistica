@@ -56,7 +56,6 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
 
     const formData = new FormData(e.currentTarget);
 
-    // Si es cliente existente, resolvemos el nombre; si es libre, usamos el input
     let clienteNombre = '';
     if (modoCliente === 'existente' && clienteId) {
       const cliente = clientes.find((c) => c.id === clienteId);
@@ -95,14 +94,16 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
     setLoading(false);
   }
 
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-md mb-8 text-black">
-      <h2 className="text-xl font-bold mb-4 text-[#0A2540]">Registrar Nuevo Paquete</h2>
+  const inputClass = "mt-1 block w-full border border-gray-300 rounded-lg p-3 text-base";
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  return (
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-md mb-6 md:mb-8 text-black">
+      <h2 className="text-lg md:text-xl font-bold mb-4 text-[#0A2540]">Registrar Nuevo Paquete</h2>
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">N de Guia</label>
-          <input name="nro_guia" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <input name="nro_guia" required className={inputClass} />
         </div>
 
         <div>
@@ -111,17 +112,11 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
             value={modoCliente === 'libre' ? '__libre__' : clienteId}
             onChange={(e) => {
               const v = e.target.value;
-              if (v === '__libre__') {
-                setModoCliente('libre');
-                setClienteId('');
-              } else if (v === '__nuevo__') {
-                window.location.href = '/dashboard/clientes';
-              } else {
-                setModoCliente('existente');
-                setClienteId(v);
-              }
+              if (v === '__libre__') { setModoCliente('libre'); setClienteId(''); }
+              else if (v === '__nuevo__') { window.location.href = '/dashboard/clientes'; }
+              else { setModoCliente('existente'); setClienteId(v); }
             }}
-            className="mt-1 block w-full border border-gray-300 rounded p-2"
+            className={inputClass}
           >
             <option value="">-- Elegir --</option>
             {clientes.length > 0 && (
@@ -139,7 +134,7 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
               name="cliente_libre"
               required
               placeholder="Nombre del cliente"
-              className="mt-2 block w-full border border-gray-300 rounded p-2"
+              className={`${inputClass} mt-2`}
             />
           )}
         </div>
@@ -150,7 +145,7 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
             value={departamentoId}
             onChange={(e) => setDepartamentoId(e.target.value)}
             required
-            className="mt-1 block w-full border border-gray-300 rounded p-2"
+            className={inputClass}
           >
             <option value="">Selecciona un departamento...</option>
             {departamentos.map((d) => (
@@ -166,15 +161,12 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
             onChange={(e) => setCiudadId(e.target.value)}
             required
             disabled={!departamentoId || cargandoCiudades}
-            className="mt-1 block w-full border border-gray-300 rounded p-2 disabled:bg-gray-100"
+            className={`${inputClass} disabled:bg-gray-100`}
           >
             <option value="">
-              {!departamentoId
-                ? 'Primero elegi un departamento'
-                : cargandoCiudades
-                ? 'Cargando ciudades...'
-                : ciudades.length === 0
-                ? 'Sin ciudades cargadas'
+              {!departamentoId ? 'Primero elegi un departamento'
+                : cargandoCiudades ? 'Cargando ciudades...'
+                : ciudades.length === 0 ? 'Sin ciudades'
                 : 'Selecciona una ciudad...'}
             </option>
             {ciudades.map((c) => (
@@ -185,22 +177,22 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Destinatario (Encarnacion)</label>
-          <input name="destinatario" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <input name="destinatario" required className={inputClass} />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Direccion</label>
-          <input name="direccion" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <input name="direccion" required className={inputClass} />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Telefono</label>
-          <input name="telefono" className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <input name="telefono" type="tel" className={inputClass} />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Tipo de Servicio</label>
-          <select name="tipo_servicio" className="mt-1 block w-full border border-gray-300 rounded p-2">
+          <select name="tipo_servicio" className={inputClass}>
             <option value="Normal">Entrega Normal</option>
             <option value="Contra Entrega">Cobro Contra Entrega</option>
           </select>
@@ -208,19 +200,19 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Monto a Cobrar (Gs.)</label>
-          <input name="monto_cobro" type="number" defaultValue={0} className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <input name="monto_cobro" type="number" inputMode="numeric" defaultValue={0} className={inputClass} />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Tarifa Flete (Gs.)</label>
-          <input name="tarifa_flete" type="number" defaultValue={22000} className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <input name="tarifa_flete" type="number" inputMode="numeric" defaultValue={22000} className={inputClass} />
         </div>
 
-        <div className="flex items-end md:col-span-2">
+        <div className="md:col-span-2 mt-2">
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0A2540] text-white font-bold p-2 rounded hover:bg-[#06192b] disabled:opacity-50"
+            className="w-full bg-[#0A2540] text-white font-bold py-4 rounded-lg hover:bg-[#06192b] disabled:opacity-50 text-base"
           >
             {loading ? 'Guardando...' : 'Agregar a la Ruta'}
           </button>
@@ -228,7 +220,7 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
       </form>
 
       {mensaje && (
-        <p className={`mt-4 font-bold ${mensaje.includes('Error') ? 'text-[#E63946]' : 'text-green-600'}`}>
+        <p className={`mt-4 font-bold text-center ${mensaje.includes('Error') ? 'text-[#E63946]' : 'text-green-600'}`}>
           {mensaje}
         </p>
       )}

@@ -28,7 +28,6 @@ export function PaqueteAcciones({
 }: Props) {
   const [isPending, startTransition] = useTransition();
   const [modal, setModal] = useState<'ausente' | 'entregar' | null>(null);
-
   const [obs, setObs] = useState('');
   const [retiradoPor, setRetiradoPor] = useState('');
   const [retiradoPorCi, setRetiradoPorCi] = useState('');
@@ -55,11 +54,8 @@ export function PaqueteAcciones({
   const confirmarReintento = () => {
     startTransition(async () => {
       const r = await reintentarEntrega(paqueteId);
-      if (!r.ok) {
-        setError(r.error);
-      } else if (r.devuelto) {
-        alert('Se alcanzo el tope de 2 intentos. El paquete fue marcado como Devuelto a remitente.');
-      }
+      if (!r.ok) setError(r.error);
+      else if (r.devuelto) alert('Se alcanzo el tope de 2 intentos. El paquete fue marcado como Devuelto.');
     });
   };
 
@@ -85,7 +81,6 @@ export function PaqueteAcciones({
     });
   };
 
-  // Estados terminales
   if (estado === 'Entregado') {
     const texto = `Hola ${clienteAsuncion}, tu paquete ${nroGuia} fue entregado a ${destinatario}.`;
     return (
@@ -93,7 +88,7 @@ export function PaqueteAcciones({
         href={`https://wa.me/?text=${encodeURIComponent(texto)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-green-500 text-white text-xs px-3 py-1 rounded hover:bg-green-600 inline-block"
+        className="block w-full text-center bg-green-500 text-white text-sm font-medium px-4 py-3 rounded-lg hover:bg-green-600"
       >
         Avisar por WhatsApp
       </a>
@@ -102,68 +97,67 @@ export function PaqueteAcciones({
 
   if (estado === 'Cancelado' || estado === 'Devuelto') {
     return (
-      <span className="text-xs text-gray-500 italic">
+      <span className="block text-center text-sm text-gray-500 italic py-2">
         {estado === 'Devuelto' ? 'Devuelto a remitente' : 'Cancelado'}
       </span>
     );
   }
 
-  // Estado activo (En Ruta o Ausente)
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       {estado === 'En Ruta' && !modal && (
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => setModal('entregar')}
-            className="bg-[#0A2540] text-white text-xs px-3 py-1 rounded hover:bg-[#06192b]"
+            className="bg-[#0A2540] text-white text-sm font-medium py-3 rounded-lg hover:bg-[#06192b]"
           >
             Entregar
           </button>
           <button
             onClick={() => setModal('ausente')}
-            className="bg-amber-500 text-white text-xs px-3 py-1 rounded hover:bg-amber-600"
+            className="bg-amber-500 text-white text-sm font-medium py-3 rounded-lg hover:bg-amber-600"
           >
-            Cliente Ausente
+            Ausente
           </button>
         </div>
       )}
 
       {estado === 'Ausente' && (
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-amber-700 font-medium">
+        <div className="flex flex-col gap-2">
+          <span className="text-xs text-amber-700 font-medium text-center">
             Intento #{intentos} fallido{intentos >= 2 ? ' (ultimo)' : ''}
           </span>
           <button
             onClick={confirmarReintento}
             disabled={isPending}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded disabled:opacity-50"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-lg disabled:opacity-50"
           >
-            {isPending ? 'Procesando...' : (intentos >= 2 ? 'Devolver a remitente' : 'Reintentar entrega')}
+            {isPending ? 'Procesando...' : intentos >= 2 ? 'Devolver a remitente' : 'Reintentar entrega'}
           </button>
-          {error && <p className="text-xs text-red-600">{error}</p>}
+          {error && <p className="text-xs text-red-600 text-center">{error}</p>}
         </div>
       )}
 
       {modal === 'ausente' && (
-        <div className="border border-amber-300 bg-amber-50 rounded p-2 flex flex-col gap-2">
+        <div className="border border-amber-300 bg-amber-50 rounded-lg p-3 flex flex-col gap-3">
           <textarea
             value={obs}
             onChange={(e) => setObs(e.target.value)}
             placeholder="Motivo / observacion (opcional)"
             maxLength={500}
             rows={2}
-            className="text-xs border rounded p-1"
+            className="text-sm border border-gray-300 rounded-lg p-3"
           />
           {error && <p className="text-xs text-red-600">{error}</p>}
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <button
               onClick={confirmarAusente}
               disabled={isPending}
-              className="bg-amber-600 text-white text-xs px-3 py-1 rounded disabled:opacity-50"
+              className="bg-amber-600 text-white text-sm font-medium py-3 rounded-lg disabled:opacity-50"
             >
               {isPending ? 'Guardando...' : 'Confirmar'}
             </button>
-            <button onClick={reset} className="text-xs px-3 py-1 rounded border">
+            <button onClick={reset} className="text-sm font-medium py-3 rounded-lg border border-gray-300">
               Cancelar
             </button>
           </div>
@@ -171,20 +165,20 @@ export function PaqueteAcciones({
       )}
 
       {modal === 'entregar' && (
-        <div className="border border-blue-300 bg-blue-50 rounded p-2 flex flex-col gap-2">
+        <div className="border border-blue-300 bg-blue-50 rounded-lg p-3 flex flex-col gap-3">
           <input
             value={retiradoPor}
             onChange={(e) => setRetiradoPor(e.target.value)}
             placeholder="Quien retiro (nombre)"
             maxLength={120}
-            className="text-xs border rounded p-1"
+            className="text-sm border border-gray-300 rounded-lg p-3"
           />
           <input
             value={retiradoPorCi}
             onChange={(e) => setRetiradoPorCi(e.target.value)}
             placeholder="C.I. del retirador"
             maxLength={20}
-            className="text-xs border rounded p-1"
+            className="text-sm border border-gray-300 rounded-lg p-3"
           />
           <textarea
             value={obs}
@@ -192,14 +186,15 @@ export function PaqueteAcciones({
             placeholder="Observaciones (opcional)"
             maxLength={500}
             rows={2}
-            className="text-xs border rounded p-1"
+            className="text-sm border border-gray-300 rounded-lg p-3"
           />
           {tipoServicio === 'Contra Entrega' && montoCobro > 0 && (
-            <label className="flex items-center gap-2 text-xs bg-white border border-green-300 rounded p-2 cursor-pointer">
+            <label className="flex items-center gap-3 text-sm bg-white border border-green-300 rounded-lg p-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={cobrado}
                 onChange={(e) => setCobrado(e.target.checked)}
+                className="w-5 h-5"
               />
               <span className="font-medium text-green-700">
                 Confirma cobro de Gs. {montoCobro.toLocaleString('es-PY')}
@@ -207,15 +202,15 @@ export function PaqueteAcciones({
             </label>
           )}
           {error && <p className="text-xs text-red-600">{error}</p>}
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <button
               onClick={confirmarEntrega}
               disabled={isPending}
-              className="bg-[#0A2540] text-white text-xs px-3 py-1 rounded disabled:opacity-50"
+              className="bg-[#0A2540] text-white text-sm font-medium py-3 rounded-lg disabled:opacity-50"
             >
-              {isPending ? 'Guardando...' : 'Confirmar entrega'}
+              {isPending ? 'Guardando...' : 'Confirmar'}
             </button>
-            <button onClick={reset} className="text-xs px-3 py-1 rounded border">
+            <button onClick={reset} className="text-sm font-medium py-3 rounded-lg border border-gray-300">
               Cancelar
             </button>
           </div>
