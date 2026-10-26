@@ -1,17 +1,47 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { crearPaquete } from '@/app/actions/paquetes';
+import { obtenerCiudadesPorDepartamento, type Departamento, type Ciudad } from '@/app/actions/ubicaciones';
 import { PaqueteFormData } from '@/lib/schemas/paqueteSchema';
 
-export default function PaqueteForm() {
+type Props = {
+  departamentos: Departamento[];
+};
+
+export default function PaqueteForm({ departamentos }: Props) {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState('');
+  const [ciudades, setCiudades] = useState<Ciudad[]>([]);
+  const [cargandoCiudades, setCargandoCiudades] = useState(false);
+  const [departamentoId, setDepartamentoId] = useState<string>('');
+  const [ciudadId, setCiudadId] = useState<string>('');
+
+  // Cargar ciudades cuando cambia el departamento
+  useEffect(() => {
+    if (!departamentoId) {
+      setCiudades([]);
+      setCiudadId('');
+      return;
+    }
+    setCargandoCiudades(true);
+    setCiudadId('');
+    obtenerCiudadesPorDepartamento(Number(departamentoId)).then((lista) => {
+      setCiudades(lista);
+      setCargandoCiudades(false);
+    });
+  }, [departamentoId]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setMensaje('');
+
+    if (!departamentoId || !ciudadId) {
+      setMensaje('Error: selecciona departamento y ciudad de origen');
+      setLoading(false);
+      return;
+    }
 
     const formData = new FormData(e.currentTarget);
     const data: PaqueteFormData = {
@@ -23,6 +53,8 @@ export default function PaqueteForm() {
       tipo_servicio: formData.get('tipo_servicio') as 'Normal' | 'Contra Entrega',
       monto_cobro: Number(formData.get('monto_cobro')) || 0,
       tarifa_flete: Number(formData.get('tarifa_flete')) || 22000,
+      departamento_origen: Number(departamentoId),
+      ciudad_origen: Number(ciudadId),
     };
 
     const res = await crearPaquete(data);
@@ -32,6 +64,9 @@ export default function PaqueteForm() {
     } else {
       setMensaje('Paquete registrado con exito');
       (e.target as HTMLFormElement).reset();
+      setDepartamentoId('');
+      setCiudadId('');
+      setCiudades([]);
     }
     setLoading(false);
   }
@@ -47,8 +82,47 @@ export default function PaqueteForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Cliente (Asuncion)</label>
-          <input name="cliente_asuncion" required className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <label className="block text-sm font-medium text-gray-700">Cliente Origen</label>
+          <input name="cliente_asuncion" required placeholder="Nombre del cliente B2B" className="mt-1 block w-full border border-gray-300 rounded p-2" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Departamento Origen</label>
+          <select
+            value={departamentoId}
+            onChange={(e) => setDepartamentoId(e.target.value)}
+            required
+            className="mt-1 block w-full border border-gray-300 rounded p-2"
+          >
+            <option value="">Selecciona un departamento...</option>
+            {departamentos.map((d) => (
+              <option key={d.id} value={d.id}>{d.nombre}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Ciudad Origen</label>
+          <select
+            value={ciudadId}
+            onChange={(e) => setCiudadId(e.target.value)}
+            required
+            disabled={!departamentoId || cargandoCiudades}
+            className="mt-1 block w-full border border-gray-300 rounded p-2 disabled:bg-gray-100"
+          >
+            <option value="">
+              {!departamentoId
+                ? 'Primero elegi un departamento'
+                : cargandoCiudades
+                ? 'Cargando ciudades...'
+                : ciudades.length === 0
+                ? 'Sin ciudades cargadas'
+                : 'Selecciona una ciudad...'}
+            </option>
+            {ciudades.map((c) => (
+              <option key={c.id} value={c.id}>{c.nombre}</option>
+            ))}
+          </select>
         </div>
 
         <div>

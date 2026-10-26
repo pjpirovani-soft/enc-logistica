@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import PaqueteForm from '@/components/PaqueteForm';
 import { logout } from '@/lib/auth-actions';
 import { PaqueteAcciones } from '@/components/PaqueteAcciones';
+import { obtenerDepartamentos } from '@/app/actions/ubicaciones';
 
 type Estado = 'En Ruta' | 'Entregado' | 'Ausente' | 'Devuelto' | 'Cancelado';
 
@@ -27,9 +28,21 @@ export default async function DashboardPage() {
     .select('*')
     .order('created_at', { ascending: false });
 
+  // Cargar departamentos + ciudades en una sola query
+  const departamentos = await obtenerDepartamentos();
+  const { data: todasCiudades } = await supabase
+    .from('ciudades')
+    .select('id, nombre, departamento_id');
+
+  // Mapa de nombres para mostrar en la tabla
+  const nombreDepto = new Map<number, string>();
+  const nombreCiudad = new Map<number, string>();
+  departamentos.forEach((d) => nombreDepto.set(d.id, d.nombre));
+  (todasCiudades ?? []).forEach((c) => nombreCiudad.set(c.id, c.nombre));
+
   return (
     <div className="min-h-screen bg-[#F1F3F5] p-8 text-black">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <header className="flex justify-between items-center mb-8 border-b-2 border-[#E63946] pb-4">
           <div className="flex items-center gap-4">
             <img
@@ -48,7 +61,7 @@ export default async function DashboardPage() {
           </form>
         </header>
 
-        <PaqueteForm />
+        <PaqueteForm departamentos={departamentos} />
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <h2 className="text-xl font-bold p-4 bg-[#0A2540] text-white">
@@ -60,6 +73,7 @@ export default async function DashboardPage() {
               <thead>
                 <tr className="bg-gray-100 text-sm">
                   <th className="p-4 border-b">Guia</th>
+                  <th className="p-4 border-b">Origen</th>
                   <th className="p-4 border-b">Cliente</th>
                   <th className="p-4 border-b">Destinatario</th>
                   <th className="p-4 border-b">Tipo</th>
@@ -70,17 +84,28 @@ export default async function DashboardPage() {
               <tbody>
                 {!paquetes || paquetes.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="p-4 text-center text-gray-500">
+                    <td colSpan={7} className="p-4 text-center text-gray-500">
                       No hay paquetes registrados aun.
                     </td>
                   </tr>
                 ) : (
                   paquetes.map((paquete) => {
                     const estado = paquete.estado as Estado;
+                    const deptoNombre = paquete.departamento_origen
+                      ? nombreDepto.get(paquete.departamento_origen) ?? '-'
+                      : '-';
+                    const ciudadNombre = paquete.ciudad_origen
+                      ? nombreCiudad.get(paquete.ciudad_origen) ?? '-'
+                      : '-';
                     return (
                       <tr key={paquete.id} className="border-b hover:bg-gray-50">
                         <td className="p-4 font-bold text-[#0A2540]">
                           {paquete.nro_guia}
+                        </td>
+                        <td className="p-4 text-xs">
+                          <span className="font-medium text-[#0A2540]">{ciudadNombre}</span>
+                          <br />
+                          <span className="text-gray-500">{deptoNombre}</span>
                         </td>
                         <td className="p-4">{paquete.cliente_asuncion}</td>
                         <td className="p-4">
@@ -98,7 +123,7 @@ export default async function DashboardPage() {
                             <div className="text-xs text-gray-600 mt-1">
                               Gs. {Number(paquete.monto_cobro).toLocaleString('es-PY')}
                               {paquete.cobrado && (
-                                <span className="ml-1 text-green-600 font-bold">✓</span>
+                                <span className="ml-1 text-green-600 font-bold">OK</span>
                               )}
                             </div>
                           )}

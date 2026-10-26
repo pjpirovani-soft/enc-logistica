@@ -9,6 +9,8 @@ export const paqueteSchema = z.object({
   tipo_servicio: z.enum(['Normal', 'Contra Entrega']),
   monto_cobro: z.coerce.number().min(0, 'El monto no puede ser negativo').default(0),
   tarifa_flete: z.coerce.number().min(0, 'La tarifa no puede ser negativa').default(22000),
+  departamento_origen: z.coerce.number().int().min(1, 'Selecciona un departamento'),
+  ciudad_origen: z.coerce.number().int().min(1, 'Selecciona una ciudad'),
 });
 
 export type PaqueteFormData = z.infer<typeof paqueteSchema>;
