@@ -149,3 +149,25 @@
   - Headers: stack vertical en mobile, flex-row en desktop.
 - **Verificación:** app probada en celular real. Se ve genial. Cards apilados, botones grandes, header stack vertical.
 - **Commits:** 2a1098e (PWA manifest), 7b22ff9 (Service Worker + InstallPrompt + offline), 7b657fe (responsive mobile-first).
+
+## 2026-10-26 — Fase 13: Reportes por cliente (CSV diario + mensual)
+
+- **Route Handlers:**
+  - app/api/reportes/diario/route.ts: GET ?cliente_id=UUID&fecha=YYYY-MM-DD.
+  - app/api/reportes/mensual/route.ts: GET ?cliente_id=UUID&mes=YYYY-MM.
+  - Ambos con autenticación obligatoria (401 sin sesión).
+  - RLS de paquetes filtra por user_id automáticamente.
+- **Cálculos separados (según BUSINESS-LOGIC.md):**
+  - tarifa_flete: suma de entregados.
+  - monto_cobro: suma de entregados.
+  - comision_cobro: monto_cobro × comision_pct / 100.
+  - importe_a_rendir: monto_cobro - comision_cobro.
+  - importe_a_facturar: tarifa_flete (NO descuenta comisión).
+- **UI:**
+  - app/dashboard/reportes/page.tsx: página nueva con selector cliente + ReporteForm.
+  - components/ReporteForm.tsx: tabs Diario/Mensual, input fecha/mes, botón descarga.
+  - Link "Reportes" en headers de /dashboard y /dashboard/clientes.
+- **Formato:** CSV (sin dependencias nuevas, como se acordó).
+- **PDF:** pendiente para Fase 13-ter.
+- **Commits:** 43a680c (diario), b4eff67 (mensual), 9a0b4ee (UI).
+- **Verificación:** CSV diario y mensual probados en producción con paquete TEST-620700.
