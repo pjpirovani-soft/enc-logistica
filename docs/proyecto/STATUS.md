@@ -15,9 +15,11 @@
 - [x] Fase 9: Estado Ausente, reintento de entrega y campos de retiro (C.I., observaciones, fecha_entrega).
 - [x] Fase 10: Tarifa flete, cobrado, devuelto_a_remitente y tope de 2 intentos.
 - [x] Fase 11: Multi-origen (departamentos, ciudades, clientes B2B, cascada en formulario).
+- [x] Fase 12: Gestión de clientes B2B (página, form, selector en paquete).
+- [x] Fase 13-bis (inicio): PWA básica (manifest + metadata + íconos).
 
 ## Próximos 3 pasos
 
-1. **Fase 12:** Refactor crearPaquete para usar cliente_id (tabla clientes B2B) + UI para crear/editar clientes.
+1. **Fase 13-bis (completar):** Service Worker + Install Prompt + Responsive mobile-first (tablas -> cards, forms apilados, botones grandes).
 2. **Fase 13:** Reportes por cliente y facturación (PDF/Excel diario por cliente).
-3. **Fase 14:** Portal B2B (login separado para clientes, ver sus paquetes).
+3. **Fase 14:** Portal B2B (login separado, ver sus paquetes).

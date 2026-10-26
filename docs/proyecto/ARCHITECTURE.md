@@ -5,67 +5,69 @@
 ## Stack Tecnológico
 - **Framework:** Next.js 16 (App Router, Turbopack).
 - **Lenguaje:** TypeScript + React 19.
-- **Estilos:** Tailwind CSS 4 (con colores personalizados de la marca).
+- **Estilos:** Tailwind CSS 4.
 - **Base de Datos:** Supabase (PostgreSQL 15 + RLS).
 - **Autenticación:** Supabase Auth (Email/Password).
 - **Validación:** Zod (cliente y servidor).
-- **Correos:** Gmail SMTP (cuenta contacto.enclogistica@gmail.com) con Contraseña de Aplicación.
+- **Correos:** Gmail SMTP (contacto.enclogistica@gmail.com).
+- **PWA:** Manifest + (pendiente) Service Worker.
 
 ## Estructura de Base de Datos
 
 ### Tablas maestras
-- **perfiles**: vinculada a auth.users. Guarda rol (admin/repartidor).
-- **departamentos** (Fase 11): 18 filas (17 deptos + Asunción). Catálogo estático.
-- **ciudades** (Fase 11): 88 ciudades principales. FK a departamentos.
-- **clientes** (Fase 11): clientes B2B. Opcional, para trazabilidad y facturación.
+- **perfiles**: rol (admin/repartidor). Vinculada a auth.users.
+- **departamentos** (Fase 11): 18 filas.
+- **ciudades** (Fase 11): 88 ciudades principales.
+- **clientes** (Fase 11 + 12): B2B opcional (RUC, tarifa_base, comision_pct, max_intentos).
 
 ### Tablas operativas
-- **paquetes**: envíos. Vinculada a user_id (repartidor) y opcionalmente a cliente_id, departamento_origen, ciudad_origen.
+- **paquetes**: envíos. Vinculada a user_id y opcionalmente a cliente_id, departamento_origen, ciudad_origen.
 
-## Flujo de Autenticación
-1. Usuario se registra en /register.
-2. Supabase crea usuario + trigger handle_new_user crea perfil 'admin'.
-3. Gmail envía correo de confirmación.
-4. Usuario inicia sesión en /login, redirigido a /dashboard.
+## Flujos principales
 
-## Flujo de Operación (Paquetes)
-1. Repartidor llena formulario en /dashboard.
-2. Fase 11: selecciona Departamento Origen y Ciudad Origen (cascada).
-3. Se llama Server Action crearPaquete.
-4. Zod valida (incluye departamento_origen, ciudad_origen).
-5. Se inserta en Supabase (estado: 'En Ruta').
-6. Al hacer clic en "Entregar", se piden: nombre retirador, C.I., observaciones, checkbox "cobrado" (si contra entrega).
-7. Se actualiza estado a 'Entregado' + campos de entrega.
-8. Aparece botón WhatsApp para avisar al cliente.
+### Autenticación
+1. Registro en /register.
+2. Trigger handle_new_user crea perfil 'admin'.
+3. Confirmación por Gmail.
+4. Login → /dashboard.
 
-## Flujo de Reintento (Fase 9 + 10)
-1. Repartidor marca "Cliente Ausente": estado 'Ausente' + fecha_ausente.
-2. Al reintentar, si intentos_entrega < 2: vuelve a 'En Ruta' + incrementa contador.
-3. Si intentos_entrega >= 2: pasa a 'Devuelto' + devuelto_a_remitente = true.
+### Crear paquete
+1. Form con cascada Departamento → Ciudad.
+2. Selector de cliente (optgroup + "Otro (texto libre)" + "+ Nuevo cliente B2B").
+3. Zod valida.
+4. Insert con estado 'En Ruta'.
 
-## Modelo de Datos (Fase 11)
-Departamentos (18) → Ciudades (88) → Clientes B2B (opcional) → Paquetes (con departamento_origen, ciudad_origen, cliente_id).
+### Entregar
+1. Modal con nombre retirador, C.I., observaciones, checkbox "cobrado" (si contra entrega).
+2. Update estado 'Entregado' + fecha_entrega.
+3. Botón WhatsApp.
 
-## ADRs (Architecture Decision Records)
+### Reintentar
+1. Si intentos < max_intentos (cliente o default 2): vuelve a 'En Ruta' + incrementa.
+2. Si intentos >= max_intentos: pasa a 'Devuelto'.
+
+## ADRs
 
 ### ADR-001: Multi-origen con departamentos y ciudades
-- **Contexto:** El modelo original asumía "Cliente Asunción" como texto libre. No soporta paquetes de otras ciudades.
-- **Decisión:** Crear tablas departamentos (18) + ciudades (88) + clientes (B2B opcional). Refactor paquetes con departamento_origen, ciudad_origen, cliente_id.
-- **Alternativas descartadas:** Texto libre (no permite reportes por zona), 250 distritos (over-engineering).
-- **Consecuencias:** Cobertura nacional real. Migración a Asunción. Formulario con cascada.
+- **Contexto:** Modelo original asumía "Cliente Asunción" texto libre.
+- **Decisión:** Tablas departamentos (18) + ciudades (88) + clientes (opcional). Refactor paquetes con departamento_origen, ciudad_origen, cliente_id.
+- **Consecuencias:** Cobertura nacional, formulario con cascada.
 
 ### ADR-002: Cliente B2B opcional
-- **Contexto:** Clientes formales (RUC) e informales (un amigo que manda 1 paquete).
+- **Contexto:** Clientes formales (RUC) e informales.
 - **Decisión:** cliente_id opcional. cliente_asuncion (texto) se mantiene.
-- **Consecuencias:** Ambos modelos conviven. Reportes serios usan cliente_id.
+- **Consecuencias:** Ambos modelos conviven.
 
-### ADR-003: Tope de 2 intentos
+### ADR-003: Tope de intentos
 - **Contexto:** Protocolo dice "si el segundo intento falla, se devuelve".
-- **Decisión:** reintentarEntrega chequea intentos_entrega >= 2, pasa a 'Devuelto'.
+- **Decisión:** reintentarEntrega chequea intentos_entrega >= max_intentos (default 2), pasa a 'Devuelto'.
 - **Consecuencias:** Trazabilidad de devoluciones.
 
-## Documentos de Negocio
-Operativa y comercial en docs/negocio/.
+### ADR-004: Tope de intentos configurable por cliente
+- **Contexto:** Algunos clientes B2B pueden necesitar más de 2 intentos.
+- **Decisión:** Campo clientes.max_intentos (SMALLINT, default 2, rango 1-5). Si el paquete tiene cliente_id, usar su max_intentos; si no, default 2.
+- **Alternativas:** Tope fijo global (menos flexible), tope por paquete (más granular pero más complejo).
+- **Consecuencias:** Flexibilidad por cliente. Requiere que reintentarEntrega consulte el cliente.
 
 ## Migraciones SQL
 - 001_clientes.sql (blueprint legacy)
@@ -73,3 +75,9 @@ Operativa y comercial en docs/negocio/.
 - 003_fase9_ausente_reintento.sql (Fase 9)
 - 004_fase10_tarifa_cobrado_devuelto.sql (Fase 10)
 - 005_fase11_multi_origen.sql (Fase 11)
+- 006_fase12_clientes_comision_intentos.sql (Fase 12)
+
+## PWA
+- Manifest en public/site.webmanifest.
+- Metadata en app/layout.tsx.
+- Service Worker: pendiente (Fase 13-bis).
