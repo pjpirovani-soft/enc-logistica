@@ -54,7 +54,13 @@ export default async function DashboardPage() {
               ENC <span className="text-[#E63946]">Logistica</span>
             </h1>
           </div>
-          <div className="flex items-center gap-3 md:gap-4">
+          <div className="flex flex-wrap items-center gap-2 md:gap-4">
+            <a
+              href="/dashboard/reportes"
+              className="flex-1 md:flex-none text-center text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
+            >
+              Reportes
+            </a>
             <a
               href="/dashboard/clientes"
               className="flex-1 md:flex-none text-center text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
