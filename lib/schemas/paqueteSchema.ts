@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const paqueteSchema = z.object({
   nro_guia: z.string().min(1, 'El numero de guia es obligatorio'),
   cliente_asuncion: z.string().min(1, 'El nombre del cliente es obligatorio'),
+  cliente_id: z.string().uuid().optional().nullable(),
   destinatario: z.string().min(1, 'El nombre del destinatario es obligatorio'),
   direccion: z.string().min(1, 'La direccion es obligatoria'),
   telefono: z.string().optional(),

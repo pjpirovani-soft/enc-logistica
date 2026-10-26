@@ -1,99 +1,92 @@
-import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import { borrarCliente } from '@/lib/cliente-actions';
+import { obtenerClientes } from '@/app/actions/clientes';
+import { logout } from '@/lib/auth-actions';
+import { ClienteForm } from '@/components/ClienteForm';
 
 export default async function ClientesPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
+  const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: clientes, error } = await supabase
-    .from('clientes')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    return <div className="p-8 text-red-600">Error cargando clientes: {error.message}</div>;
+  if (!user) {
+    redirect('/login');
   }
 
+  const clientes = await obtenerClientes();
+
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-[#F1F3F5] p-8 text-black">
       <div className="max-w-5xl mx-auto">
-        <header className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold">Mis clientes</h1>
-            <p className="text-gray-600 text-sm">Gestioná tu cartera de clientes.</p>
+        <header className="flex justify-between items-center mb-8 border-b-2 border-[#E63946] pb-4">
+          <div className="flex items-center gap-4">
+            <img
+              src="/alas-azul-transparente.png"
+              alt="ENC Logistica"
+              className="h-14 w-auto object-contain"
+            />
+            <h1 className="text-3xl font-bold text-[#0A2540]">
+              ENC <span className="text-[#E63946]">Logistica</span>
+            </h1>
           </div>
-          <Link
-            href="/dashboard/clientes/nuevo"
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 text-sm"
-          >
-            + Nuevo cliente
-          </Link>
+          <div className="flex items-center gap-4">
+            <a href="/dashboard" className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946]">
+              Volver al Dashboard
+            </a>
+            <form action={logout}>
+              <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
+                Cerrar Sesion
+              </button>
+            </form>
+          </div>
         </header>
 
-        {clientes && clientes.length === 0 ? (
-          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center text-gray-500">
-            <p>Todavía no tenés clientes cargados.</p>
-            <Link
-              href="/dashboard/clientes/nuevo"
-              className="text-blue-600 hover:underline mt-4 inline-block"
-            >
-              Crear el primero
-            </Link>
-          </div>
-        ) : (
-          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-gray-50 border-b border-gray-200 text-sm text-gray-600">
-                <tr>
-                  <th className="px-6 py-3 font-medium">Nombre</th>
-                  <th className="px-6 py-3 font-medium">Email</th>
-                  <th className="px-6 py-3 font-medium">Teléfono</th>
-                  <th className="px-6 py-3 font-medium text-right">Acciones</th>
+        <ClienteForm />
+
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <h2 className="text-xl font-bold p-4 bg-[#0A2540] text-white">
+            Clientes B2B ({clientes.length})
+          </h2>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gray-100 text-sm">
+                  <th className="p-4 border-b">Nombre</th>
+                  <th className="p-4 border-b">RUC</th>
+                  <th className="p-4 border-b">Telefono</th>
+                  <th className="p-4 border-b">Email</th>
+                  <th className="p-4 border-b">Tarifa Base</th>
+                  <th className="p-4 border-b">Comision</th>
+                  <th className="p-4 border-b">Max Intentos</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
-                {clientes?.map((cliente) => (
-                  <tr key={cliente.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium">{cliente.nombre}</td>
-                    <td className="px-6 py-4 text-gray-600">{cliente.email}</td>
-                    <td className="px-6 py-4 text-gray-600">{cliente.telefono || '-'}</td>
-                    <td className="px-6 py-4 text-right space-x-3">
-                      <Link
-                        href={`/dashboard/clientes/${cliente.id}`}
-                        className="text-blue-600 hover:underline text-sm"
-                      >
-                        Editar
-                      </Link>
-                      <form
-                        action={async () => {
-                          'use server';
-                          await borrarCliente(cliente.id);
-                        }}
-                        className="inline"
-                      >
-                        <button type="submit" className="text-red-600 hover:underline text-sm">
-                          Borrar
-                        </button>
-                      </form>
+              <tbody>
+                {clientes.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="p-4 text-center text-gray-500">
+                      No hay clientes registrados aun. Crea el primero con el formulario de arriba.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  clientes.map((cliente) => (
+                    <tr key={cliente.id} className="border-b hover:bg-gray-50">
+                      <td className="p-4 font-bold text-[#0A2540]">{cliente.nombre}</td>
+                      <td className="p-4 text-sm">{cliente.ruc || '-'}</td>
+                      <td className="p-4 text-sm">{cliente.telefono || '-'}</td>
+                      <td className="p-4 text-sm">{cliente.email || '-'}</td>
+                      <td className="p-4 text-sm">
+                        Gs. {Number(cliente.tarifa_base).toLocaleString('es-PY')}
+                      </td>
+                      <td className="p-4 text-sm">{cliente.comision_pct}%</td>
+                      <td className="p-4 text-sm">{cliente.max_intentos}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
-        )}
-
-        <div className="mt-6">
-          <Link href="/dashboard" className="text-gray-500 hover:text-black text-sm">
-            ← Volver al panel
-          </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

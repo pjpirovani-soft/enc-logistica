@@ -4,6 +4,7 @@ import PaqueteForm from '@/components/PaqueteForm';
 import { logout } from '@/lib/auth-actions';
 import { PaqueteAcciones } from '@/components/PaqueteAcciones';
 import { obtenerDepartamentos } from '@/app/actions/ubicaciones';
+import { obtenerClientes } from '@/app/actions/clientes';
 
 type Estado = 'En Ruta' | 'Entregado' | 'Ausente' | 'Devuelto' | 'Cancelado';
 
@@ -28,17 +29,18 @@ export default async function DashboardPage() {
     .select('*')
     .order('created_at', { ascending: false });
 
-  // Cargar departamentos + ciudades en una sola query
   const departamentos = await obtenerDepartamentos();
+  const clientes = await obtenerClientes();
   const { data: todasCiudades } = await supabase
     .from('ciudades')
     .select('id, nombre, departamento_id');
 
-  // Mapa de nombres para mostrar en la tabla
   const nombreDepto = new Map<number, string>();
   const nombreCiudad = new Map<number, string>();
+  const nombreCliente = new Map<string, string>();
   departamentos.forEach((d) => nombreDepto.set(d.id, d.nombre));
   (todasCiudades ?? []).forEach((c) => nombreCiudad.set(c.id, c.nombre));
+  clientes.forEach((c) => nombreCliente.set(c.id, c.nombre));
 
   return (
     <div className="min-h-screen bg-[#F1F3F5] p-8 text-black">
@@ -54,14 +56,22 @@ export default async function DashboardPage() {
               ENC <span className="text-[#E63946]">Logistica</span>
             </h1>
           </div>
-          <form action={logout}>
-            <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
-              Cerrar Sesion
-            </button>
-          </form>
+          <div className="flex items-center gap-4">
+            <a
+              href="/dashboard/clientes"
+              className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946]"
+            >
+              Clientes B2B
+            </a>
+            <form action={logout}>
+              <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
+                Cerrar Sesion
+              </button>
+            </form>
+          </div>
         </header>
 
-        <PaqueteForm departamentos={departamentos} />
+        <PaqueteForm departamentos={departamentos} clientes={clientes} />
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <h2 className="text-xl font-bold p-4 bg-[#0A2540] text-white">
@@ -97,23 +107,22 @@ export default async function DashboardPage() {
                     const ciudadNombre = paquete.ciudad_origen
                       ? nombreCiudad.get(paquete.ciudad_origen) ?? '-'
                       : '-';
+                    const clienteMostrado = paquete.cliente_id
+                      ? nombreCliente.get(paquete.cliente_id) ?? paquete.cliente_asuncion
+                      : paquete.cliente_asuncion;
                     return (
                       <tr key={paquete.id} className="border-b hover:bg-gray-50">
-                        <td className="p-4 font-bold text-[#0A2540]">
-                          {paquete.nro_guia}
-                        </td>
+                        <td className="p-4 font-bold text-[#0A2540]">{paquete.nro_guia}</td>
                         <td className="p-4 text-xs">
                           <span className="font-medium text-[#0A2540]">{ciudadNombre}</span>
                           <br />
                           <span className="text-gray-500">{deptoNombre}</span>
                         </td>
-                        <td className="p-4">{paquete.cliente_asuncion}</td>
+                        <td className="p-4">{clienteMostrado}</td>
                         <td className="p-4">
                           {paquete.destinatario}
                           <br />
-                          <span className="text-xs text-gray-500">
-                            {paquete.direccion}
-                          </span>
+                          <span className="text-xs text-gray-500">{paquete.direccion}</span>
                         </td>
                         <td className="p-4">
                           <span className="text-xs px-2 py-0.5 rounded bg-gray-100">
@@ -129,11 +138,7 @@ export default async function DashboardPage() {
                           )}
                         </td>
                         <td className="p-4">
-                          <span
-                            className={`px-2 py-1 rounded text-xs font-bold ${
-                              estadoBadge[estado] ?? estadoBadge['En Ruta']
-                            }`}
-                          >
+                          <span className={`px-2 py-1 rounded text-xs font-bold ${estadoBadge[estado] ?? estadoBadge['En Ruta']}`}>
                             {paquete.estado}
                           </span>
                         </td>
@@ -143,7 +148,7 @@ export default async function DashboardPage() {
                             estado={estado}
                             intentos={paquete.intentos_entrega ?? 1}
                             nroGuia={paquete.nro_guia}
-                            clienteAsuncion={paquete.cliente_asuncion}
+                            clienteAsuncion={clienteMostrado}
                             destinatario={paquete.destinatario}
                             tipoServicio={(paquete.tipo_servicio ?? 'Normal') as 'Normal' | 'Contra Entrega'}
                             montoCobro={Number(paquete.monto_cobro ?? 0)}

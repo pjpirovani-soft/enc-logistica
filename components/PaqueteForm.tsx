@@ -3,21 +3,26 @@
 import { useState, useEffect } from 'react';
 import { crearPaquete } from '@/app/actions/paquetes';
 import { obtenerCiudadesPorDepartamento, type Departamento, type Ciudad } from '@/app/actions/ubicaciones';
+import { type ClienteB2B } from '@/app/actions/clientes';
 import { PaqueteFormData } from '@/lib/schemas/paqueteSchema';
 
 type Props = {
   departamentos: Departamento[];
+  clientes: ClienteB2B[];
 };
 
-export default function PaqueteForm({ departamentos }: Props) {
+export default function PaqueteForm({ departamentos, clientes }: Props) {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState('');
   const [ciudades, setCiudades] = useState<Ciudad[]>([]);
   const [cargandoCiudades, setCargandoCiudades] = useState(false);
   const [departamentoId, setDepartamentoId] = useState<string>('');
   const [ciudadId, setCiudadId] = useState<string>('');
+  const [modoCliente, setModoCliente] = useState<'existente' | 'libre'>(
+    clientes.length > 0 ? 'existente' : 'libre'
+  );
+  const [clienteId, setClienteId] = useState<string>('');
 
-  // Cargar ciudades cuando cambia el departamento
   useEffect(() => {
     if (!departamentoId) {
       setCiudades([]);
@@ -43,10 +48,27 @@ export default function PaqueteForm({ departamentos }: Props) {
       return;
     }
 
+    if (modoCliente === 'existente' && !clienteId) {
+      setMensaje('Error: selecciona un cliente B2B o elegi "Otro (texto libre)"');
+      setLoading(false);
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
+
+    // Si es cliente existente, resolvemos el nombre; si es libre, usamos el input
+    let clienteNombre = '';
+    if (modoCliente === 'existente' && clienteId) {
+      const cliente = clientes.find((c) => c.id === clienteId);
+      clienteNombre = cliente?.nombre ?? '';
+    } else {
+      clienteNombre = (formData.get('cliente_libre') as string) || '';
+    }
+
     const data: PaqueteFormData = {
       nro_guia: formData.get('nro_guia') as string,
-      cliente_asuncion: formData.get('cliente_asuncion') as string,
+      cliente_asuncion: clienteNombre,
+      cliente_id: modoCliente === 'existente' && clienteId ? clienteId : null,
       destinatario: formData.get('destinatario') as string,
       direccion: formData.get('direccion') as string,
       telefono: formData.get('telefono') as string,
@@ -67,6 +89,8 @@ export default function PaqueteForm({ departamentos }: Props) {
       setDepartamentoId('');
       setCiudadId('');
       setCiudades([]);
+      setClienteId('');
+      setModoCliente(clientes.length > 0 ? 'existente' : 'libre');
     }
     setLoading(false);
   }
@@ -83,7 +107,41 @@ export default function PaqueteForm({ departamentos }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">Cliente Origen</label>
-          <input name="cliente_asuncion" required placeholder="Nombre del cliente B2B" className="mt-1 block w-full border border-gray-300 rounded p-2" />
+          <select
+            value={modoCliente === 'libre' ? '__libre__' : clienteId}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === '__libre__') {
+                setModoCliente('libre');
+                setClienteId('');
+              } else if (v === '__nuevo__') {
+                window.location.href = '/dashboard/clientes';
+              } else {
+                setModoCliente('existente');
+                setClienteId(v);
+              }
+            }}
+            className="mt-1 block w-full border border-gray-300 rounded p-2"
+          >
+            <option value="">-- Elegir --</option>
+            {clientes.length > 0 && (
+              <optgroup label="Clientes B2B registrados">
+                {clientes.map((c) => (
+                  <option key={c.id} value={c.id}>{c.nombre}</option>
+                ))}
+              </optgroup>
+            )}
+            <option value="__libre__">Otro (texto libre)</option>
+            <option value="__nuevo__">+ Nuevo cliente B2B</option>
+          </select>
+          {modoCliente === 'libre' && (
+            <input
+              name="cliente_libre"
+              required
+              placeholder="Nombre del cliente"
+              className="mt-2 block w-full border border-gray-300 rounded p-2"
+            />
+          )}
         </div>
 
         <div>
