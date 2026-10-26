@@ -19,11 +19,11 @@ export default async function ReportesPage() {
           <div className="flex items-center gap-3">
             <img
               src="/alas-azul-transparente.png"
-              alt="ENC Logistica"
+              alt="ENC Logística"
               className="h-10 md:h-14 w-auto object-contain"
             />
             <h1 className="text-xl md:text-3xl font-bold text-[#0A2540]">
-              ENC <span className="text-[#E63946]">Logistica</span>
+              ENC <span className="text-[#E63946]">Logística</span>
             </h1>
           </div>
           <div className="flex items-center gap-3 md:gap-4">
@@ -43,7 +43,7 @@ export default async function ReportesPage() {
 
         <h2 className="text-lg md:text-2xl font-bold text-[#0A2540] mb-4">Reportes por Cliente B2B</h2>
         <p className="text-sm text-gray-600 mb-6">
-          Descarga reportes diarios o mensuales con el detalle de entregas, cobros, comisiones y montos a rendir/facturar.
+          Descargá reportes diarios o mensuales con el detalle de entregas, cobros, comisiones y montos a rendir/facturar.
         </p>
 
         <ReporteForm clientes={clientes} />

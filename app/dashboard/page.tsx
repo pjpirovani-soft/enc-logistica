@@ -47,11 +47,11 @@ export default async function DashboardPage() {
           <div className="flex items-center gap-3">
             <img
               src="/alas-azul-transparente.png"
-              alt="ENC Logistica"
+              alt="ENC Logística"
               className="h-10 md:h-14 w-auto object-contain"
             />
             <h1 className="text-xl md:text-3xl font-bold text-[#0A2540]">
-              ENC <span className="text-[#E63946]">Logistica</span>
+              ENC <span className="text-[#E63946]">Logística</span>
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:gap-4">
@@ -84,7 +84,7 @@ export default async function DashboardPage() {
 
           {!paquetes || paquetes.length === 0 ? (
             <p className="p-6 text-center text-gray-500">
-              No hay paquetes registrados aun.
+              No hay paquetes registrados aún.
             </p>
           ) : (
             <>
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
                           <span className="text-right font-medium">{paquete.destinatario}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-500">Direccion:</span>
+                          <span className="text-gray-500">Dirección:</span>
                           <span className="text-right text-xs">{paquete.direccion}</span>
                         </div>
                         <div className="flex justify-between">
@@ -166,7 +166,7 @@ export default async function DashboardPage() {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-gray-100 text-sm">
-                      <th className="p-4 border-b">Guia</th>
+                      <th className="p-4 border-b">Guía</th>
                       <th className="p-4 border-b">Origen</th>
                       <th className="p-4 border-b">Cliente</th>
                       <th className="p-4 border-b">Destinatario</th>

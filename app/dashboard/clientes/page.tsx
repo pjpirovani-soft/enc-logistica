@@ -19,11 +19,11 @@ export default async function ClientesPage() {
           <div className="flex items-center gap-3">
             <img
               src="/alas-azul-transparente.png"
-              alt="ENC Logistica"
+              alt="ENC Logística"
               className="h-10 md:h-14 w-auto object-contain"
             />
             <h1 className="text-xl md:text-3xl font-bold text-[#0A2540]">
-              ENC <span className="text-[#E63946]">Logistica</span>
+              ENC <span className="text-[#E63946]">Logística</span>
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-2 md:gap-4">
@@ -56,7 +56,7 @@ export default async function ClientesPage() {
 
           {clientes.length === 0 ? (
             <p className="p-6 text-center text-gray-500">
-              No hay clientes registrados aun.
+              No hay clientes registrados aún.
             </p>
           ) : (
             <>
@@ -74,7 +74,7 @@ export default async function ClientesPage() {
                       )}
                       {cliente.telefono && (
                         <div className="flex justify-between">
-                          <span className="text-gray-500">Telefono:</span>
+                          <span className="text-gray-500">Teléfono:</span>
                           <span className="text-right">{cliente.telefono}</span>
                         </div>
                       )}
@@ -91,11 +91,11 @@ export default async function ClientesPage() {
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-500">Comision:</span>
+                        <span className="text-gray-500">Comisión:</span>
                         <span className="text-right">{cliente.comision_pct}%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-500">Max intentos:</span>
+                        <span className="text-gray-500">Máx. intentos:</span>
                         <span className="text-right">{cliente.max_intentos}</span>
                       </div>
                     </div>
@@ -110,11 +110,11 @@ export default async function ClientesPage() {
                     <tr className="bg-gray-100 text-sm">
                       <th className="p-4 border-b">Nombre</th>
                       <th className="p-4 border-b">RUC</th>
-                      <th className="p-4 border-b">Telefono</th>
+                      <th className="p-4 border-b">Teléfono</th>
                       <th className="p-4 border-b">Email</th>
                       <th className="p-4 border-b">Tarifa Base</th>
-                      <th className="p-4 border-b">Comision</th>
-                      <th className="p-4 border-b">Max Intentos</th>
+                      <th className="p-4 border-b">Comisión</th>
+                      <th className="p-4 border-b">Máx. Intentos</th>
                     </tr>
                   </thead>
                   <tbody>
