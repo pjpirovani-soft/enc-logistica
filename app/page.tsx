@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { CONTACTO, EMPRESA } from '@/lib/config';
+import { MessageCircle, Mail, Phone, MapPin, Clock, Package, Truck, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -35,8 +36,9 @@ export default async function HomePage() {
               href={CONTACTO.whatsapp + '?text=' + encodeURIComponent(CONTACTO.whatsappMensaje)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-white bg-[#0A2540] hover:bg-[#06192b] px-4 py-2 rounded-lg"
+              className="text-sm font-semibold text-white bg-[#0A2540] hover:bg-[#06192b] px-4 py-2 rounded-lg flex items-center gap-2"
             >
+              <MessageCircle className="w-4 h-4" />
               Contactar
             </a>
           </div>
@@ -56,14 +58,16 @@ export default async function HomePage() {
               href={CONTACTO.whatsapp + '?text=' + encodeURIComponent(CONTACTO.whatsappMensaje)}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#E63946] hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg text-base"
+              className="bg-[#E63946] hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg text-base flex items-center justify-center gap-2"
             >
+              <MessageCircle className="w-5 h-5" />
               Consultar por WhatsApp
             </a>
             <a
               href={'mailto:' + CONTACTO.email}
-              className="bg-white text-[#0A2540] hover:bg-gray-100 font-bold py-3 px-8 rounded-lg text-base"
+              className="bg-white text-[#0A2540] hover:bg-gray-100 font-bold py-3 px-8 rounded-lg text-base flex items-center justify-center gap-2"
             >
+              <Mail className="w-5 h-5" />
               Enviar email
             </a>
           </div>
@@ -92,7 +96,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="w-12 h-12 bg-[#0A2540] rounded-lg flex items-center justify-center mb-4">
-                <span className="text-white text-2xl font-bold">1</span>
+                <Package className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-[#0A2540] mb-2">Entrega puerta a puerta</h3>
               <p className="text-gray-600">
@@ -101,7 +105,7 @@ export default async function HomePage() {
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="w-12 h-12 bg-[#0A2540] rounded-lg flex items-center justify-center mb-4">
-                <span className="text-white text-2xl font-bold">2</span>
+                <Truck className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-[#0A2540] mb-2">Cobro contra entrega</h3>
               <p className="text-gray-600">
@@ -110,7 +114,7 @@ export default async function HomePage() {
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="w-12 h-12 bg-[#0A2540] rounded-lg flex items-center justify-center mb-4">
-                <span className="text-white text-2xl font-bold">3</span>
+                <ArrowRight className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-[#0A2540] mb-2">Logística inversa</h3>
               <p className="text-gray-600">
@@ -119,7 +123,7 @@ export default async function HomePage() {
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="w-12 h-12 bg-[#0A2540] rounded-lg flex items-center justify-center mb-4">
-                <span className="text-white text-2xl font-bold">4</span>
+                <MapPin className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-[#0A2540] mb-2">Cobertura Gran Encarnación</h3>
               <p className="text-gray-600">
@@ -138,7 +142,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-[#0A2540] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl font-bold">1</span>
+                <Package className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-bold text-[#0A2540] mb-2">Enviás</h3>
               <p className="text-gray-600 text-sm">
@@ -147,7 +151,7 @@ export default async function HomePage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#0A2540] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl font-bold">2</span>
+                <Truck className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-bold text-[#0A2540] mb-2">Recibimos</h3>
               <p className="text-gray-600 text-sm">
@@ -156,7 +160,7 @@ export default async function HomePage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-[#0A2540] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl font-bold">3</span>
+                <CheckCircle className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-lg font-bold text-[#0A2540] mb-2">Te avisamos</h3>
               <p className="text-gray-600 text-sm">
@@ -178,9 +182,11 @@ export default async function HomePage() {
               href={CONTACTO.whatsapp + '?text=' + encodeURIComponent(CONTACTO.whatsappMensaje)}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white rounded-lg p-4 flex items-center gap-3"
+              className="bg-green-500 hover:bg-green-600 text-white rounded-lg p-4 flex items-center gap-3 transition"
             >
-              <span className="text-3xl">💬</span>
+              <div className="bg-white/20 rounded-full p-2">
+                <MessageCircle className="w-6 h-6 text-white" />
+              </div>
               <div className="text-left">
                 <p className="font-bold">WhatsApp</p>
                 <p className="text-sm">{CONTACTO.telefonoDisplay}</p>
@@ -188,9 +194,11 @@ export default async function HomePage() {
             </a>
             <a
               href={'mailto:' + CONTACTO.email}
-              className="bg-[#E63946] hover:bg-red-700 text-white rounded-lg p-4 flex items-center gap-3"
+              className="bg-[#E63946] hover:bg-red-700 text-white rounded-lg p-4 flex items-center gap-3 transition"
             >
-              <span className="text-3xl">✉️</span>
+              <div className="bg-white/20 rounded-full p-2">
+                <Mail className="w-6 h-6 text-white" />
+              </div>
               <div className="text-left">
                 <p className="font-bold">Email</p>
                 <p className="text-sm break-all">{CONTACTO.email}</p>
