@@ -5,12 +5,12 @@ import { InstallPrompt } from '@/components/InstallPrompt';
 
 export const metadata: Metadata = {
   title: {
-    default: 'ENC Logistica',
-    template: '%s | ENC Logistica',
+    default: 'ENC Logística',
+    template: '%s | ENC Logística',
   },
-  description: 'Logistica de ultima milla en Encarnacion, Paraguay.',
+  description: 'Logística de última milla en Encarnación, Paraguay.',
   manifest: '/site.webmanifest',
-  applicationName: 'ENC Logistica',
+  applicationName: 'ENC Logística',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',

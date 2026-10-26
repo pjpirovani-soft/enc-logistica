@@ -12,25 +12,24 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-white text-black">
-      {/* HEADER */}
       <header className="border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-3">
           <div className="flex items-center gap-3">
             <img
               src="/alas-azul-transparente.png"
-              alt="ENC Logistica"
+              alt="ENC Logística"
               className="h-10 md:h-12 w-auto object-contain"
             />
-            <h1 className="text-xl md:text-2xl font-bold text-[#0A2540]">
-              ENC <span className="text-[#E63946]">Logistica</span>
-            </h1>
+            <div className="text-xl md:text-2xl font-bold text-[#0A2540]">
+              ENC <span className="text-[#E63946]">Logística</span>
+            </div>
           </div>
           <div className="flex gap-2">
             <a
               href="/login"
               className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-4 py-2 rounded-lg border border-[#0A2540]"
             >
-              Iniciar Sesion
+              Iniciar Sesión
             </a>
             <a
               href={CONTACTO.whatsapp + '?text=' + encodeURIComponent(CONTACTO.whatsappMensaje)}
@@ -44,14 +43,13 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* HERO */}
       <section className="bg-[#0A2540] text-white py-16 md:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-            Entregas puerta a puerta en <span className="text-[#E63946]">Encarnacion</span>
-          </h2>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+            Entregas puerta a puerta en <span className="text-[#E63946]">Encarnación</span>
+          </h1>
           <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Recibimos paquetes de todo Paraguay y los entregamos en el dia en Encarnacion y Gran Encarnacion. Con confirmacion fotografica y cobro contra entrega.
+            Recibimos paquetes de todo Paraguay y los entregamos en el día en Encarnación y Gran Encarnación. Con confirmación fotográfica y cobro contra entrega.
           </p>
           <div className="flex flex-col md:flex-row gap-3 justify-center">
             <a
@@ -72,26 +70,24 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* NOSOTROS */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540] text-center mb-6">
-            Quienes somos
+            Quiénes somos
           </h2>
           <p className="text-lg text-gray-700 text-center max-w-2xl mx-auto mb-4">
-            ENC Logistica es una empresa de logistica de ultima milla con base en Encarnacion, Paraguay.
+            ENC Logística es una empresa de logística de última milla con base en Encarnación, Paraguay.
           </p>
           <p className="text-lg text-gray-700 text-center max-w-2xl mx-auto">
-            Funcionamos como extension operativa de empresas de todo el pais que venden en Encarnacion y el Gran Encarnacion pero no tienen presencia fisica local. Un interlocutor unico, comunicacion directa por WhatsApp y flexibilidad para acuerdos B2B.
+            Funcionamos como extensión operativa de empresas de todo el país que venden en Encarnación y el Gran Encarnación pero no tienen presencia física local. Un interlocutor único, comunicación directa por WhatsApp y flexibilidad para acuerdos B2B.
           </p>
         </div>
       </section>
 
-      {/* QUE HACEMOS */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540] text-center mb-10">
-            Que hacemos
+            Qué hacemos
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -100,7 +96,7 @@ export default async function HomePage() {
               </div>
               <h3 className="text-xl font-bold text-[#0A2540] mb-2">Entrega puerta a puerta</h3>
               <p className="text-gray-600">
-                Retiramos en la terminal de omnibus y entregamos en el domicilio del destinatario. Confirmacion fotografica de cada entrega.
+                Retiramos en la terminal de ómnibus y entregamos en el domicilio del destinatario. Confirmación fotográfica de cada entrega.
               </p>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -109,23 +105,23 @@ export default async function HomePage() {
               </div>
               <h3 className="text-xl font-bold text-[#0A2540] mb-2">Cobro contra entrega</h3>
               <p className="text-gray-600">
-                Cobramos al destinatario y te transferimos el monto el mismo dia, descontando nuestra comision. Rendicion diaria.
+                Cobramos al destinatario y te transferimos el monto el mismo día, descontando nuestra comisión. Rendición diaria.
               </p>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="w-12 h-12 bg-[#0A2540] rounded-lg flex items-center justify-center mb-4">
                 <span className="text-white text-2xl font-bold">3</span>
               </div>
-              <h3 className="text-xl font-bold text-[#0A2540] mb-2">Logistica inversa</h3>
+              <h3 className="text-xl font-bold text-[#0A2540] mb-2">Logística inversa</h3>
               <p className="text-gray-600">
-                Si el cliente no esta, reintentamos al dia siguiente. Despues del tope de intentos, devolvemos el paquete a tu bodega.
+                Si el cliente no está, reintentamos al día siguiente. Después del tope de intentos, devolvemos el paquete a tu bodega.
               </p>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <div className="w-12 h-12 bg-[#0A2540] rounded-lg flex items-center justify-center mb-4">
                 <span className="text-white text-2xl font-bold">4</span>
               </div>
-              <h3 className="text-xl font-bold text-[#0A2540] mb-2">Cobertura Gran Encarnacion</h3>
+              <h3 className="text-xl font-bold text-[#0A2540] mb-2">Cobertura Gran Encarnación</h3>
               <p className="text-gray-600">
                 Entregamos en {EMPRESA.cobertura.join(', ')}. Viajes programados a localidades vecinas con tarifa diferenciada.
               </p>
@@ -134,20 +130,19 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* COMO FUNCIONA */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540] text-center mb-10">
-            Como funciona
+            Cómo funciona
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-[#0A2540] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-2xl font-bold">1</span>
               </div>
-              <h3 className="text-lg font-bold text-[#0A2540] mb-2">Envias</h3>
+              <h3 className="text-lg font-bold text-[#0A2540] mb-2">Enviás</h3>
               <p className="text-gray-600 text-sm">
-                Despachas el paquete por bus a la terminal de Encarnacion, a nombre de ENC Logistica.
+                Despachás el paquete por bus a la terminal de Encarnación, a nombre de ENC Logística.
               </p>
             </div>
             <div className="text-center">
@@ -156,7 +151,7 @@ export default async function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-[#0A2540] mb-2">Recibimos</h3>
               <p className="text-gray-600 text-sm">
-                Retiramos, verificamos y entregamos en el domicilio del destinatario el mismo dia.
+                Retiramos, verificamos y entregamos en el domicilio del destinatario el mismo día.
               </p>
             </div>
             <div className="text-center">
@@ -165,14 +160,13 @@ export default async function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-[#0A2540] mb-2">Te avisamos</h3>
               <p className="text-gray-600 text-sm">
-                Te enviamos foto de la entrega y, si es contra entrega, rendimos el cobro el mismo dia.
+                Te enviamos foto de la entrega y, si es contra entrega, rendimos el cobro el mismo día.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CONTACTO */}
       <section className="py-16 px-4 bg-[#0A2540] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Contactanos</h2>
@@ -206,19 +200,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="bg-gray-900 text-gray-400 py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="mb-2">
-            <span className="text-white font-bold">ENC</span> <span className="text-[#E63946] font-bold">Logistica</span>
+            <span className="text-white font-bold">ENC</span> <span className="text-[#E63946] font-bold">Logística</span>
           </p>
-          <p className="text-sm mb-4">Logistica de ultima milla en Encarnacion, Paraguay.</p>
+          <p className="text-sm mb-4">Logística de última milla en Encarnación, Paraguay.</p>
           <div className="flex gap-4 justify-center text-sm">
-            <a href="/login" className="hover:text-white">Iniciar Sesion</a>
+            <a href="/login" className="hover:text-white">Iniciar Sesión</a>
             <a href={CONTACTO.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a>
             <a href={'mailto:' + CONTACTO.email} className="hover:text-white">Email</a>
           </div>
-          <p className="text-xs mt-6">© 2026 ENC Logistica. Todos los derechos reservados.</p>
+          <p className="text-xs mt-6">© 2026 ENC Logística. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
