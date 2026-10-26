@@ -55,7 +55,7 @@ export function PaqueteAcciones({
     startTransition(async () => {
       const r = await reintentarEntrega(paqueteId);
       if (!r.ok) setError(r.error);
-      else if (r.devuelto) alert('Se alcanzo el tope de 2 intentos. El paquete fue marcado como Devuelto.');
+      else if (r.devuelto) alert('Se alcanzó el tope de 2 intentos. El paquete fue marcado como Devuelto.');
     });
   };
 
@@ -65,7 +65,7 @@ export function PaqueteAcciones({
       return;
     }
     if (tipoServicio === 'Contra Entrega' && montoCobro > 0 && !cobrado) {
-      setError('Debes confirmar el cobro antes de marcar entregado');
+      setError('Debés confirmar el cobro antes de marcar entregado');
       return;
     }
     startTransition(async () => {
@@ -143,7 +143,7 @@ export function PaqueteAcciones({
           <textarea
             value={obs}
             onChange={(e) => setObs(e.target.value)}
-            placeholder="Motivo / observacion (opcional)"
+            placeholder="Motivo / observación (opcional)"
             maxLength={500}
             rows={2}
             className="text-sm border border-gray-300 rounded-lg p-3"
@@ -169,7 +169,7 @@ export function PaqueteAcciones({
           <input
             value={retiradoPor}
             onChange={(e) => setRetiradoPor(e.target.value)}
-            placeholder="Quien retiro (nombre)"
+            placeholder="Quién retiró (nombre)"
             maxLength={120}
             className="text-sm border border-gray-300 rounded-lg p-3"
           />

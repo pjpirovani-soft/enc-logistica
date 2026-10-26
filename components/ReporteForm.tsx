@@ -7,10 +7,10 @@ type Props = {
   clientes: ClienteB2B[];
 };
 
-type TipoReporte = 'diario' | 'mensual';
+type TipoReporte = 'Diario' | 'Mensual';
 
 export function ReporteForm({ clientes }: Props) {
-  const [tipo, setTipo] = useState<TipoReporte>('diario');
+  const [tipo, setTipo] = useState<TipoReporte>('Diario');
   const [clienteId, setClienteId] = useState<string>(clientes.length > 0 ? clientes[0].id : '');
   const [fecha, setFecha] = useState<string>(new Date().toISOString().slice(0, 10));
   const [mes, setMes] = useState<string>(new Date().toISOString().slice(0, 7));
@@ -20,15 +20,15 @@ export function ReporteForm({ clientes }: Props) {
 
   async function handleDescargar() {
     if (!clienteId) {
-      setError('Selecciona un cliente');
+      setError('Seleccioná un cliente');
       return;
     }
-    if (tipo === 'diario' && !fecha) {
-      setError('Selecciona una fecha');
+    if (tipo === 'Diario' && !fecha) {
+      setError('Seleccioná una fecha');
       return;
     }
-    if (tipo === 'mensual' && !mes) {
-      setError('Selecciona un mes');
+    if (tipo === 'Mensual' && !mes) {
+      setError('Seleccioná un mes');
       return;
     }
 
@@ -46,14 +46,14 @@ export function ReporteForm({ clientes }: Props) {
       let url = '';
       let filename = '';
 
-      if (tipo === 'diario') {
+      if (tipo === 'Diario') {
         params.set('fecha', fecha);
-        url = `/api/reportes/diario?${params.toString()}`;
-        filename = `reporte-diario-${clienteNombre.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${fecha}.csv`;
+        url = `/api/reportes/Diario?${params.toString()}`;
+        filename = `reporte-Diario-${clienteNombre.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${fecha}.csv`;
       } else {
         params.set('mes', mes);
-        url = `/api/reportes/mensual?${params.toString()}`;
-        filename = `reporte-mensual-${clienteNombre.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${mes}.csv`;
+        url = `/api/reportes/Mensual?${params.toString()}`;
+        filename = `reporte-Mensual-${clienteNombre.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${mes}.csv`;
       }
 
       const res = await fetch(url);
@@ -73,7 +73,7 @@ export function ReporteForm({ clientes }: Props) {
       link.click();
       URL.revokeObjectURL(link.href);
 
-      setExito('Reporte descargado con exito');
+      setExito('Reporte descargado con éxito');
     } catch (err) {
       console.error(err);
       setError('Error al descargar el reporte');
@@ -110,9 +110,9 @@ export function ReporteForm({ clientes }: Props) {
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-              onClick={() => setTipo('diario')}
+              onClick={() => setTipo('Diario')}
               className={`py-3 rounded-lg font-medium transition ${
-                tipo === 'diario'
+                tipo === 'Diario'
                   ? 'bg-[#0A2540] text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
@@ -121,9 +121,9 @@ export function ReporteForm({ clientes }: Props) {
             </button>
             <button
               type="button"
-              onClick={() => setTipo('mensual')}
+              onClick={() => setTipo('Mensual')}
               className={`py-3 rounded-lg font-medium transition ${
-                tipo === 'mensual'
+                tipo === 'Mensual'
                   ? 'bg-[#0A2540] text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
@@ -146,7 +146,7 @@ export function ReporteForm({ clientes }: Props) {
           </select>
         </div>
 
-        {tipo === 'diario' ? (
+        {tipo === 'Diario' ? (
           <div>
             <label className="block text-sm font-medium text-gray-700">Fecha</label>
             <input
@@ -174,7 +174,7 @@ export function ReporteForm({ clientes }: Props) {
           disabled={loading}
           className="w-full bg-green-600 text-white font-bold py-4 rounded-lg hover:bg-green-700 disabled:opacity-50 text-base"
         >
-          {loading ? 'Generando...' : `Descargar CSV ${tipo === 'diario' ? 'diario' : 'mensual'}`}
+          {loading ? 'Generando...' : `Descargar CSV ${tipo === 'Diario' ? 'Diario' : 'Mensual'}`}
         </button>
 
         {error && (

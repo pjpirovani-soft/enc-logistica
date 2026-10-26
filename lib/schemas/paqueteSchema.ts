@@ -1,17 +1,17 @@
 import { z } from 'zod';
 
 export const paqueteSchema = z.object({
-  nro_guia: z.string().min(1, 'El numero de guia es obligatorio'),
+  nro_guia: z.string().min(1, 'El número de guía es obligatorio'),
   cliente_asuncion: z.string().min(1, 'El nombre del cliente es obligatorio'),
   cliente_id: z.string().uuid().optional().nullable(),
   destinatario: z.string().min(1, 'El nombre del destinatario es obligatorio'),
-  direccion: z.string().min(1, 'La direccion es obligatoria'),
+  direccion: z.string().min(1, 'La dirección es obligatoria'),
   telefono: z.string().optional(),
   tipo_servicio: z.enum(['Normal', 'Contra Entrega']),
   monto_cobro: z.coerce.number().min(0, 'El monto no puede ser negativo').default(0),
   tarifa_flete: z.coerce.number().min(0, 'La tarifa no puede ser negativa').default(22000),
-  departamento_origen: z.coerce.number().int().min(1, 'Selecciona un departamento'),
-  ciudad_origen: z.coerce.number().int().min(1, 'Selecciona una ciudad'),
+  departamento_origen: z.coerce.number().int().min(1, 'Seleccioná un departamento'),
+  ciudad_origen: z.coerce.number().int().min(1, 'Seleccioná una ciudad'),
 });
 
 export type PaqueteFormData = z.infer<typeof paqueteSchema>;

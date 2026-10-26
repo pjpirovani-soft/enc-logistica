@@ -29,7 +29,7 @@ export function ClienteForm() {
     const res = await crearCliente(data);
 
     if (res.ok) {
-      setMensaje('Cliente creado con exito');
+      setMensaje('Cliente creado con éxito');
       (e.target as HTMLFormElement).reset();
       setAbierto(false);
     } else {
@@ -89,7 +89,7 @@ export function ClienteForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Telefono</label>
+          <label className="block text-sm font-medium text-gray-700">Teléfono</label>
           <input
             name="telefono"
             placeholder="Ej: 0981-123456"
@@ -118,7 +118,7 @@ export function ClienteForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Comision (%)</label>
+          <label className="block text-sm font-medium text-gray-700">Comisión (%)</label>
           <input
             name="comision_pct"
             type="number"
@@ -129,7 +129,7 @@ export function ClienteForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Max Intentos</label>
+          <label className="block text-sm font-medium text-gray-700">Máx. Intentos</label>
           <input
             name="max_intentos"
             type="number"

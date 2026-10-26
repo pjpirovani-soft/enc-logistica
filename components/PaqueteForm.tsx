@@ -83,7 +83,7 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
     if (res.error) {
       setMensaje('Error: ' + res.error);
     } else {
-      setMensaje('Paquete registrado con exito');
+      setMensaje('Paquete registrado con éxito');
       (e.target as HTMLFormElement).reset();
       setDepartamentoId('');
       setCiudadId('');
@@ -102,7 +102,7 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">N de Guia</label>
+          <label className="block text-sm font-medium text-gray-700">N° de Guía</label>
           <input name="nro_guia" required className={inputClass} />
         </div>
 
@@ -147,7 +147,7 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
             required
             className={inputClass}
           >
-            <option value="">Selecciona un departamento...</option>
+            <option value="">Seleccioná un departamento...</option>
             {departamentos.map((d) => (
               <option key={d.id} value={d.id}>{d.nombre}</option>
             ))}
@@ -164,10 +164,10 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
             className={`${inputClass} disabled:bg-gray-100`}
           >
             <option value="">
-              {!departamentoId ? 'Primero elegi un departamento'
+              {!departamentoId ? 'Primero elegí un departamento'
                 : cargandoCiudades ? 'Cargando ciudades...'
                 : ciudades.length === 0 ? 'Sin ciudades'
-                : 'Selecciona una ciudad...'}
+                : 'Seleccioná una ciudad...'}
             </option>
             {ciudades.map((c) => (
               <option key={c.id} value={c.id}>{c.nombre}</option>
@@ -176,17 +176,17 @@ export default function PaqueteForm({ departamentos, clientes }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Destinatario (Encarnacion)</label>
+          <label className="block text-sm font-medium text-gray-700">Destinatario (Encarnación)</label>
           <input name="destinatario" required className={inputClass} />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Direccion</label>
+          <label className="block text-sm font-medium text-gray-700">Dirección</label>
           <input name="direccion" required className={inputClass} />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Telefono</label>
+          <label className="block text-sm font-medium text-gray-700">Teléfono</label>
           <input name="telefono" type="tel" className={inputClass} />
         </div>
 
