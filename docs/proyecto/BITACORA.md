@@ -134,3 +134,18 @@
 - Mover app/actions/ a lib/actions/ según CONVENCIONES.md.
 - Verificar que 001_clientes.sql no rompa si se corre fresh.
 - Tests automatizados (Vitest + Playwright).
+## 2026-10-26 — Fase 13-bis: PWA + responsive mobile-first (completa)
+
+- **PWA completa:**
+  - Service Worker (public/sw.js): network-first para páginas públicas, cache-first para assets estáticos, network-only para /dashboard y /api (datos sensibles).
+  - app/offline/page.tsx: fallback cuando no hay red.
+  - components/ServiceWorkerRegister.tsx: registra SW al cargar.
+  - components/InstallPrompt.tsx: banner de instalación, solo mobile, sessionStorage para no molestar.
+- **Responsive mobile-first:**
+  - app/dashboard/page.tsx: cards en mobile (<768px), tabla en desktop (>=768px).
+  - app/dashboard/clientes/page.tsx: mismo patrón.
+  - components/PaqueteForm.tsx: form apilado, inputs grandes (p-3), inputMode numeric.
+  - components/PaqueteAcciones.tsx: botones py-3, grid 2 columnas, checkbox w-5 h-5.
+  - Headers: stack vertical en mobile, flex-row en desktop.
+- **Verificación:** app probada en celular real. Se ve genial. Cards apilados, botones grandes, header stack vertical.
+- **Commits:** 2a1098e (PWA manifest), 7b22ff9 (Service Worker + InstallPrompt + offline), 7b657fe (responsive mobile-first).

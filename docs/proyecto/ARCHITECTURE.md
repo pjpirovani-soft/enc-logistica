@@ -10,7 +10,7 @@
 - **Autenticación:** Supabase Auth (Email/Password).
 - **Validación:** Zod (cliente y servidor).
 - **Correos:** Gmail SMTP (contacto.enclogistica@gmail.com).
-- **PWA:** Manifest + (pendiente) Service Worker.
+- **PWA:** Manifest + Service Worker (Fase 13-bis).
 
 ## Estructura de Base de Datos
 
@@ -78,6 +78,13 @@
 - 006_fase12_clientes_comision_intentos.sql (Fase 12)
 
 ## PWA
-- Manifest en public/site.webmanifest.
-- Metadata en app/layout.tsx.
-- Service Worker: pendiente (Fase 13-bis).
+- **Manifest:** public/site.webmanifest (name, short_name, theme_color #0A2540, start_url /dashboard, icons).
+- **Metadata:** app/layout.tsx (manifest, appleWebApp, icons, viewport themeColor).
+- **Service Worker:** public/sw.js.
+  - **Network-first** para páginas públicas (/login, /register, /offline).
+  - **Cache-first** para assets estáticos (/_next/static, imágenes, fuentes).
+  - **Network-only** para /dashboard y /api (NUNCA cachea datos sensibles).
+  - **Offline fallback** para navegación sin red -> /offline.
+- **Install Prompt:** components/InstallPrompt.tsx (banner solo en mobile, sessionStorage para no molestar).
+- **Registro:** components/ServiceWorkerRegister.tsx (client component).
+- **Responsive:** mobile-first con prefijo md: de Tailwind. Cards en mobile, tabla en desktop.

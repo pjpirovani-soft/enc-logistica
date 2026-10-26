@@ -16,10 +16,10 @@
 - [x] Fase 10: Tarifa flete, cobrado, devuelto_a_remitente y tope de 2 intentos.
 - [x] Fase 11: Multi-origen (departamentos, ciudades, clientes B2B, cascada en formulario).
 - [x] Fase 12: Gestión de clientes B2B (página, form, selector en paquete).
-- [x] Fase 13-bis (inicio): PWA básica (manifest + metadata + íconos).
+- [x] Fase 13-bis: PWA + responsive mobile-first (Service Worker, install prompt, cards en mobile, touch-friendly).
 
 ## Próximos 3 pasos
 
-1. **Fase 13-bis (completar):** Service Worker + Install Prompt + Responsive mobile-first (tablas -> cards, forms apilados, botones grandes).
-2. **Fase 13:** Reportes por cliente y facturación (PDF/Excel diario por cliente).
-3. **Fase 14:** Portal B2B (login separado, ver sus paquetes).
+1. **Fase 13:** Reportes por cliente y facturación (PDF/Excel diario por cliente).
+2. **Fase 14:** Portal B2B (login separado, ver sus paquetes).
+3. **Fase 15:** Facturación electrónica (SIFEN).

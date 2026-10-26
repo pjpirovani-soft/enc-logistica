@@ -4,6 +4,27 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-26
+
+### Added
+- Fase 13-bis: PWA + responsive mobile-first.
+- public/sw.js (Service Worker: network-first público, cache-first assets, network-only dashboard).
+- app/offline/page.tsx (fallback offline).
+- components/ServiceWorkerRegister.tsx (registro del SW).
+- components/InstallPrompt.tsx (banner de instalación solo en mobile).
+- app/dashboard/page.tsx: cards en mobile, tabla en desktop.
+- app/dashboard/clientes/page.tsx: cards en mobile, tabla en desktop.
+- components/PaqueteForm.tsx: form apilado en mobile, inputs grandes.
+- components/PaqueteAcciones.tsx: botones touch-friendly (py-3), grid 2 columnas.
+
+### Changed
+- app/layout.tsx: monta SW + InstallPrompt.
+- Responsive: mobile-first con prefijo md: para desktop.
+
+### Security
+- Service Worker NO cachea /dashboard ni /api (network-only).
+- Datos de paquetes/clientes siempre desde red (frescos).
+
 ## [0.6.0] - 2026-10-26
 
 ### Added
@@ -18,12 +39,8 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 - app/actions/clientes.ts con obtenerClientes, crearCliente, actualizarCliente.
 - app/dashboard/clientes/page.tsx (listar + crear).
 - components/ClienteForm.tsx (form inline).
-- Selector de cliente en PaqueteForm (optgroup + "Otro (texto libre)" + "+ Nuevo cliente B2B").
+- Selector de cliente en PaqueteForm.
 - Migración SQL 006: comision_pct + max_intentos en clientes.
-
-### Changed
-- lib/schemas/paqueteSchema.ts: cliente_id opcional.
-- app/dashboard/page.tsx: link "Clientes B2B" + resolución de nombre de cliente.
 
 ### Removed
 - app/dashboard/clientes/[id]/page.tsx (huérfano del blueprint).
@@ -37,9 +54,9 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ### Added
 - Fase 11: Multi-origen (departamentos, ciudades, clientes B2B).
-- Cascada Departamento -> Ciudad en formulario.
-- Columna "Origen" en tabla de paquetes.
-- ADRs documentados (ADR-001, ADR-002, ADR-003).
+- Cascada Departamento -> Ciudad.
+- Columna Origen en tabla de paquetes.
+- ADRs documentados.
 - Migración SQL 005.
 
 ## [0.3.0] - 2026-10-26
@@ -47,14 +64,14 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 ### Added
 - Fase 10: tarifa_flete, cobrado, devuelto_a_remitente.
 - Tope de 2 intentos.
-- Estado "Devuelto" en CHECK.
-- Checkbox "Confirma cobro" en modal Entregar.
+- Estado Devuelto en CHECK.
+- Checkbox Confirma cobro.
 - Migración SQL 004.
 
 ## [0.2.0] - 2026-10-25
 
 ### Added
-- Fase 9: Estado "Ausente" + flujo de reintento.
+- Fase 9: Estado Ausente + flujo de reintento.
 - Campos observaciones, retirado_por, retirado_por_ci, intentos_entrega, fecha_entrega, fecha_ausente.
 - Componente PaqueteAcciones.tsx.
 - Migración SQL 003.
