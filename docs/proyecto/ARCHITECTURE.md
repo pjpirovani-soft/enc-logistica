@@ -88,3 +88,27 @@
 - **Install Prompt:** components/InstallPrompt.tsx (banner solo en mobile, sessionStorage para no molestar).
 - **Registro:** components/ServiceWorkerRegister.tsx (client component).
 - **Responsive:** mobile-first con prefijo md: de Tailwind. Cards en mobile, tabla en desktop.
+## Reportes (Fase 13)
+
+### Route Handlers
+- **GET /api/reportes/diario** ?cliente_id=UUID&fecha=YYYY-MM-DD
+  - Auth obligatoria (401 sin sesión).
+  - RLS de paquetes filtra por user_id.
+  - Devuelve CSV con resumen + detalle.
+- **GET /api/reportes/mensual** ?cliente_id=UUID&mes=YYYY-MM
+  - Mismo formato, filtro por mes.
+  - Detalle incluye columna "Fecha Entrega".
+
+### Cálculos (separados)
+- tarifa_flete = sum(tarifa_flete) de entregados
+- monto_cobro = sum(monto_cobro) de entregados
+- comision_cobro = monto_cobro × (comision_pct / 100)
+- importe_a_rendir = monto_cobro - comision_cobro
+- importe_a_facturar = tarifa_flete (NO descuenta comisión)
+
+### UI
+- /dashboard/reportes: selector cliente + tabs Diario/Mensual + descarga CSV.
+- Link "Reportes" en headers.
+
+### Formato
+- CSV por ahora (sin dependencias). PDF en Fase 13-ter.
