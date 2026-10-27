@@ -96,3 +96,25 @@ Servicio de logística de última milla con base en Encarnación, Paraguay. Func
 - ¿La app emite factura legal o solo registro? -> **Registro. Factura en sistema contable externo.**
 - ¿El WhatsApp al destinatario es manual o automático? -> **Manual por ahora, automático en Fase 13.**
 - ¿La comisión se calcula al entregar o al facturar? -> **Al facturar (Fase 13). Por ahora solo se guarda `monto_cobro`.**
+## Protección de Datos (Ley 6534/2020)
+
+### Portal B2B — Qué datos se muestran al cliente
+
+**Política:** el portal del cliente B2B **NO muestra** datos personales del destinatario que estén protegidos por la Ley 6534/2020 de Protección de Datos Personales.
+
+**Datos que SÍ se muestran:**
+- `nro_guia`, `destinatario` (nombre), `direccion`, `estado`, `tipo_servicio`, `monto_cobro`, `cobrado`, `tarifa_flete`, `fecha_entrega`, `fecha_ausente`, `created_at`.
+
+**Datos que NO se muestran:**
+- `retirado_por` (nombre completo del que retiró).
+- `retirado_por_ci` (C.I. del retirador — dato sensible).
+- `observaciones` (notas internas del operador).
+- `intentos_entrega` (dato operativo interno).
+- `user_id` (ID del operador).
+
+**Justificación:**
+- La Ley 6534/2020 protege los datos personales del destinatario. El cliente B2B **no es el titular** de esos datos.
+- El cliente B2B sí tiene derecho a saber el **estado del paquete** (Código Civil, contrato de transporte) y el **monto a facturar** (Ley 4868/2013, comercio electrónico).
+- Si un cliente B2B **necesita** `retirado_por` o `retirado_por_ci` para auditoría, debe solicitarlo **con consentimiento explícito del destinatario** y documentarlo en el contrato.
+
+**Implementación:** `app/portal/page.tsx` filtra los campos a mostrar. La server action `obtenerMisPaquetes()` en `app/actions/portal.ts` también podría filtrar (defensa en profundidad).

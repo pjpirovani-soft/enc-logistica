@@ -12,7 +12,7 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 - RLS: cliente B2B puede ver su propio registro y sus paquetes.
 - Server actions: `obtenerMiCliente`, `obtenerMisPaquetes`, `vincularClienteAUsuario`, `vincularClienteManual`, `obtenerClientesSinVincular`.
 - Portal login (`/portal/login`) y registro (`/portal/register`).
-- Dashboard del portal (`/portal`) con placeholder.
+- Dashboard del portal (`/portal`) con lista de paquetes.
 - `loginPortal()` y `logoutPortal()` en `lib/auth-actions.ts`.
 - `PasswordInput` con toggle mostrar/ocultar (Eye/EyeOff).
 - Banner "Nueva versión disponible" cuando el SW se actualiza.
@@ -26,6 +26,7 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 ### Security
 - Policies RLS `clientes_self_read` y `paquetes_cliente_read`.
 - Vincular cliente a usuario: automático (email) o manual (admin).
+- Portal B2B NO muestra `retirado_por`, `retirado_por_ci` ni `observaciones` (Ley 6534/2020).
 
 ## [0.8.0] - 2026-10-26
 
