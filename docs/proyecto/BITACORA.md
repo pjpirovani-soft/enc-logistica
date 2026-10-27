@@ -178,3 +178,10 @@
 - **Análisis:** el CVE solo es explotable si el código usa `z.array()` sin `.max()` o `.length()`. **La app no usa `z.array()`** en ningún schema (solo `z.object()`, `z.string()`, `z.number()`, `z.enum()`).
 - **Decisión:** NO migrar a Zod 4 ahora. El CVE no es explotable en la app. Migración a Zod 4 planificada para Fase 16.
 - **Acción:** documentado, sin cambios de código.
+
+## 2026-10-26  Auditoría de vulnerabilidades npm
+
+- **CVE-2023-54404 (Zod 3.x):** el `npm audit` reporta 1 vulnerabilidad high en `zod@3.25.76`.
+- **Análisis:** el CVE solo es explotable si el código usa `z.array()` sin `.max()` o `.length()`. **La app no usa `z.array()`** en ningún schema (solo `z.object()`, `z.string()`, `z.number()`, `z.enum()`).
+- **Decisión:** NO migrar a Zod 4 ahora. El CVE no es explotable en la app. Migración a Zod 4 planificada para Fase 16.
+- **Acción:** documentado, sin cambios de código.
