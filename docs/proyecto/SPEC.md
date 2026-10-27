@@ -89,3 +89,34 @@ App de gestión operativa para ENC Logística (última milla en Encarnación, Pa
 3. [x] Features operativas (Fases 9-11)
 4. [ ] Features avanzadas (Fases 12-15: clientes B2B UI, reportes, portal, multi-repartidor)
 5. [ ] Pruebas y lanzamiento comercial
+## Portal B2B (Fase 14)
+
+### Incluido en MVP
+- **Login separado** para clientes B2B (`/portal/login`).
+- **Registro** con vinculación automática por email (`/portal/register`).
+- **Dashboard del cliente** con lista de SUS paquetes (`/portal`).
+- **KPIs:** total paquetes, entregados, total cobrado, total a facturar.
+- **Filtros** por estado (Todos / En Ruta / Entregado / Ausente / Devuelto).
+- **Reportes descargables** (CSV diario + mensual) filtrados por su cliente.
+- **Protección de datos:** NO se muestran `retirado_por`, `retirado_por_ci`, `observaciones` (Ley 6534/2020).
+
+### Fuera del MVP
+- El cliente B2B **NO puede crear paquetes** desde el portal (solo lectura).
+- El cliente B2B **NO puede ver paquetes de otros clientes**.
+- El destinatario **NO tiene portal público** (tracking en Fase 16).
+- El cliente B2B **NO puede editar** sus datos (contacta a ENC Logística).
+
+### Criterios de aceptación
+- [x] Login del portal redirige a `/portal` (no a `/dashboard`).
+- [x] Registro vincula automáticamente si email coincide con `clientes.email`.
+- [x] Si no coincide, mensaje "Contactanos" + email.
+- [x] Dashboard muestra solo los paquetes del cliente logueado (RLS + filtro explícito).
+- [x] KPIs calculados correctamente.
+- [x] Filtros funcionan con URL params (`?filtro=Entregado`).
+- [x] Reportes CSV descargables sin datos sensibles.
+- [x] Mobile responsive (cards en mobile, tabla en desktop).
+- [x] Acentos correctos en toda la UI.
+
+### Dependencias
+- Ley 6534/2020 (Protección de Datos Personales).
+- RLS de Supabase (clientes_self_read + paquetes_cliente_read).

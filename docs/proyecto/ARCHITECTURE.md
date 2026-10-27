@@ -112,3 +112,35 @@
 
 ### Formato
 - CSV por ahora (sin dependencias). PDF en Fase 13-ter.
+## Portal B2B (Fase 14)
+
+### Separación de accesos
+- **`/dashboard/*`** → Operador (admin). Ve todos los paquetes, gestiona, reportes completos.
+- **`/portal/*`** → Cliente B2B. Ve solo SUS paquetes y reportes filtrados.
+
+### Autenticación
+- Mismo Supabase Auth (email/password).
+- `login()` redirige a `/dashboard`. `loginPortal()` redirige a `/portal`.
+- Vinculación: `clientes.auth_user_id` FK a `auth.users`.
+
+### RLS
+- **`clientes_self_read`:** cliente B2B ve su propio registro.
+- **`paquetes_cliente_read`:** cliente B2B ve sus paquetes (`cliente_id IN (SELECT id FROM clientes WHERE auth_user_id = auth.uid())`).
+- **`Ver solo mis paquetes`:** operador ve sus paquetes (`user_id = auth.uid()`).
+
+### Route Handlers del portal
+- **`/api/reportes/portal/diario`:** CSV diario filtrado (sin datos sensibles).
+- **`/api/reportes/portal/mensual`:** CSV mensual filtrado (sin datos sensibles).
+- **Datos filtrados por Ley 6534/2020:** no incluyen `retirado_por`, `retirado_por_ci`, `observaciones`.
+
+### Route Handlers del operador
+- **`/api/reportes/diario`:** CSV diario con todos los datos (uso interno).
+- **`/api/reportes/mensual`:** CSV mensual con todos los datos (uso interno).
+
+## Protección de Datos (Ley 6534/2020)
+
+- **Portal B2B NO muestra** `retirado_por`, `retirado_por_ci`, `observaciones`.
+- **Reportes del portal NO incluyen** datos personales del destinatario.
+- **Consentimiento del destinatario:** responsabilidad del cliente B2B (en su checkout/T&C).
+- **Derechos del titular:** contacto a `contacto.enclogistica@gmail.com`, 15 días hábiles.
+- Ver `BUSINESS-LOGIC.md` sección "Política completa de la Ley 6534/2020".

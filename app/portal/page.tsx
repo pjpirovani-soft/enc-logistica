@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { obtenerMiCliente, obtenerMisPaquetes } from '@/app/actions/portal';
 import { logoutPortal } from '@/lib/auth-actions';
+import Link from 'next/link';
 import { Package, CheckCircle, XCircle, RotateCcw, Truck, Clock } from 'lucide-react';
 
 type Estado = 'En Ruta' | 'Entregado' | 'Ausente' | 'Devuelto' | 'Cancelado';
@@ -45,7 +46,13 @@ export default async function PortalPage({
               contacto.enclogistica@gmail.com
             </a>
           </p>
-          <form action={logoutPortal}>
+          <Link
+              href="/portal/reportes"
+              className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
+            >
+              Reportes
+            </Link>
+            <form action={logoutPortal}>
             <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
               Cerrar Sesión
             </button>
@@ -103,7 +110,13 @@ export default async function PortalPage({
               <p className="text-xs md:text-sm text-gray-500">Portal Clientes B2B</p>
             </div>
           </div>
-          <form action={logoutPortal}>
+          <Link
+              href="/portal/reportes"
+              className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
+            >
+              Reportes
+            </Link>
+            <form action={logoutPortal}>
             <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
               Cerrar Sesión
             </button>

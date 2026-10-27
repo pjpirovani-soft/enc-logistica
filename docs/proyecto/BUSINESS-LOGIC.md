@@ -118,3 +118,66 @@ Servicio de logística de última milla con base en Encarnación, Paraguay. Func
 - Si un cliente B2B **necesita** `retirado_por` o `retirado_por_ci` para auditoría, debe solicitarlo **con consentimiento explícito del destinatario** y documentarlo en el contrato.
 
 **Implementación:** `app/portal/page.tsx` filtra los campos a mostrar. La server action `obtenerMisPaquetes()` en `app/actions/portal.ts` también podría filtrar (defensa en profundidad).
+
+## Política completa de la Ley 6534/2020 (Protección de Datos Personales)
+
+### Marco legal
+
+La Ley 6534/2020 de Protección de Datos Personales de Paraguay regula el tratamiento de datos personales. Establece que:
+- Los datos personales solo pueden tratarse con **consentimiento del titular** o por obligación legal.
+- Los datos sensibles (C.I., datos de salud, etc.) requieren **consentimiento explícito**.
+- Los titulares tienen derecho a **acceder, rectificar, cancelar y oponerse** al tratamiento.
+
+### Aplicación a ENC Logística
+
+**Roles:**
+- **ENC Logística** es **encargado del tratamiento** (recibe los datos para cumplir el servicio).
+- **Cliente B2B** es **responsable del tratamiento** (decide para qué se usan los datos).
+- **Destinatario final** es el **titular de los datos** (nombre, C.I., dirección).
+
+**Datos personales que maneja la app:**
+- `destinatario` (nombre del destinatario final).
+- `direccion` (domicilio).
+- `telefono` (contacto).
+- `retirado_por` (nombre de quien retiró el paquete).
+- `retirado_por_ci` (C.I. de quien retiró).
+
+**Qué puede ver cada rol:**
+
+| Rol | `destinatario` | `direccion` | `retirado_por` | `retirado_por_ci` | `observaciones` |
+|-----|:---:|:---:|:---:|:---:|:---:|
+| **Operador** (vos) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Cliente B2B** (portal) | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **Destinatario** (público) | ❌ | ❌ | ❌ | ❌ | ❌ |
+
+**Justificación:**
+- El **operador** necesita todos los datos para ejecutar el servicio (entregar, cobrar, registrar quién retiró).
+- El **cliente B2B** necesita `destinatario` y `direccion` para atención al cliente, pero **no** necesita `retirado_por`/`retirado_por_ci` (los puede pedir por email al operador si los necesita para auditoría).
+- El **destinatario** no accede a la app (no hay portal público de tracking todavía).
+
+### Consentimiento del destinatario
+
+**Obligación del cliente B2B:** debe informar al destinatario que sus datos serán compartidos con ENC Logística para el servicio de entrega. Esto se hace en el checkout de la tienda online o en los términos y condiciones del servicio.
+
+**Obligación de ENC Logística:** no compartir datos del destinatario con terceros (excepto el cliente B2B para rendición de cuentas). El operador (repartidor) accede a los datos para ejecutar la entrega.
+
+### Derechos del titular (destinatario)
+
+Si un destinatario solicita acceso, rectificación o cancelación de sus datos:
+1. **Contactar a ENC Logística:** `contacto.enclogistica@gmail.com`.
+2. **Plazo de respuesta:** 15 días hábiles.
+3. **Acciones disponibles:** acceso, rectificación, cancelación, oposición.
+
+### Implementación técnica
+
+- **RLS en Supabase:** filtra `paquetes` por `user_id` (operador) o `cliente_id` (cliente B2B).
+- **Portal B2B (`app/portal/*`):** filtra `retirado_por`, `retirado_por_ci`, `observaciones` en las queries.
+- **Reportes del portal (`app/api/reportes/portal/*`):** devuelven CSV sin datos sensibles.
+- **Reportes del operador (`app/api/reportes/*`):** devuelven CSV con todos los datos (uso interno).
+
+### Pendiente para Fase 16
+
+- [ ] Política de privacidad pública en `/privacidad`.
+- [ ] Términos y condiciones del servicio.
+- [ ] Formulario de consentimiento para el checkout del cliente B2B.
+- [ ] Email de notificación al destinatario informando que sus datos fueron compartidos.
