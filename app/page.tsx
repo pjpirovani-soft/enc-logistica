@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { CONTACTO, EMPRESA } from '@/lib/config';
+import { Footer } from '@/components/Footer';
 import { MessageCircle, Mail, Phone, MapPin, Clock, Package, Truck, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default async function HomePage() {
@@ -208,20 +209,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <footer className="bg-gray-900 text-gray-400 py-8 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="mb-2">
-            <span className="text-white font-bold">ENC</span> <span className="text-[#E63946] font-bold">Logística</span>
-          </p>
-          <p className="text-sm mb-4">Logística de última milla en Encarnación, Paraguay.</p>
-          <div className="flex gap-4 justify-center text-sm">
-            <a href="/login" className="hover:text-white">Iniciar Sesión</a>
-            <a href={CONTACTO.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a>
-            <a href={'mailto:' + CONTACTO.email} className="hover:text-white">Email</a>
-          </div>
-          <p className="text-xs mt-6">© 2026 ENC Logística. Todos los derechos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -87,6 +87,13 @@ export default function PortalRegisterPage() {
                 <PasswordInput name="password" minLength={6} />
                 <p className="text-xs text-gray-500 mt-1">Mínimo 6 caracteres.</p>
               </div>
+              <label className="flex items-start gap-2 text-xs text-gray-600">
+                <input type="checkbox" required className="mt-0.5" />
+                <span>
+                  Acepto los <a href="/terminos" target="_blank" className="text-[#0A2540] underline">términos y condiciones</a> y la{' '}
+                  <a href="/privacidad" target="_blank" className="text-[#0A2540] underline">política de privacidad</a>.
+                </span>
+              </label>
               <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded-lg hover:bg-[#06192b] transition-colors">
                 Crear Cuenta
               </button>

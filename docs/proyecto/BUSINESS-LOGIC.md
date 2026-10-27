@@ -220,3 +220,30 @@ Si un destinatario solicita acceso, rectificación o cancelación de sus datos:
 - [ ] Agregar "Continuar con Google" en `/portal/login` y `/portal/register`.
 - [ ] Configurar Google OAuth en Supabase (requiere Google Cloud Console).
 - [ ] Agregar "Continuar con Apple" (requiere Apple Developer Program, USD 99/año).
+
+## Responsable legal y roadmap a empresa
+
+### Situación actual (Fase 1)
+
+- **Titular legal:** Luciana Noelia Da Silva, RUC 8971446-6.
+- **Nombre comercial:** ENC Logística.
+- **Facturación:** a nombre de Luciana (persona física).
+- **Pedro J. Pirovani:** programador + repartidor (no titular).
+
+### Roadmap a empresa (Fase 2)
+
+- **Cuándo:** cuando el negocio escale (2+ clientes estables, >Gs. 10.000.000/mes).
+- **Tipo:** E.I.R.L. (Empresa Individual de Responsabilidad Limitada) o S.R.L.
+- **Costo:** Gs. 1.500.000 - 2.500.000.
+- **Tiempo:** 2-4 semanas.
+- **Beneficios:**
+  - Responsabilidad limitada (protege patrimonio personal de Luciana).
+  - Imagen profesional ("ENC Logística E.I.R.L.").
+  - Escalable a socios.
+  - Cuenta bancaria empresarial.
+- **Qué hay que actualizar cuando se cree:**
+  - `lib/legal.ts` (RUC y razón social).
+  - `/privacidad` y `/terminos` (responsable del tratamiento).
+  - `CLIENTE.md`.
+  - Contratos B2B (firmante = representante legal de la empresa).
+  - Facturación (RUC empresarial).
