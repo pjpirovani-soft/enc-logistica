@@ -5,6 +5,7 @@ import { logout } from '@/lib/auth-actions';
 import { PaqueteAcciones } from '@/components/PaqueteAcciones';
 import { obtenerDepartamentos } from '@/app/actions/ubicaciones';
 import { obtenerClientes } from '@/app/actions/clientes';
+import { Footer } from '@/components/Footer';
 import { APP_VERSION } from '@/lib/config';
 
 type Estado = 'En Ruta' | 'Entregado' | 'Ausente' | 'Devuelto' | 'Cancelado';
@@ -240,8 +241,10 @@ export default async function DashboardPage() {
             </>
           )}
         </div>
-        <p className="text-center text-xs text-gray-400 mt-8">ENC Logística v{APP_VERSION}</p>
+        
+<Footer />
+
       </div>
-    </div>
-  );
+</div>
+);
 }

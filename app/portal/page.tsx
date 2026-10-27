@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { obtenerMiCliente, obtenerMisPaquetes } from '@/app/actions/portal';
 import { logoutPortal } from '@/lib/auth-actions';
 import Link from 'next/link';
+import { Footer } from '@/components/Footer';
 import { Package, CheckCircle, XCircle, RotateCcw, Truck, Clock } from 'lucide-react';
 
 type Estado = 'En Ruta' | 'Entregado' | 'Ausente' | 'Devuelto' | 'Cancelado';
@@ -277,10 +278,10 @@ export default async function PortalPage({
           )}
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
-          ¿Consultas? Escribinos a contacto.enclogistica@gmail.com
-        </p>
+        
+<Footer />
+
       </div>
-    </div>
-  );
+</div>
+);
 }

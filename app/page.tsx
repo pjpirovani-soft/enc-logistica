@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { CONTACTO, EMPRESA } from '@/lib/config';
 import { Footer } from '@/components/Footer';
@@ -27,6 +28,9 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="flex gap-2">
+            <Link href="/privacidad" className="text-xs sm:text-sm font-semibold text-gray-600 hover:text-[#0A2540] px-2 py-2">
+              Privacidad
+            </Link>
             <a
               href="/login"
               className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-4 py-2 rounded-lg border border-[#0A2540]"
