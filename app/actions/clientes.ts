@@ -16,6 +16,7 @@ export type ClienteB2B = {
   comision_pct: number;
   max_intentos: number;
   activo: boolean;
+  auth_user_id: string | null;
   created_at: string;
 };
 
@@ -23,7 +24,7 @@ const clienteSchema = z.object({
   nombre: z.string().trim().min(1, 'El nombre es obligatorio').max(120),
   ruc: z.string().trim().max(20).optional().nullable(),
   telefono: z.string().trim().max(30).optional().nullable(),
-  email: z.string().trim().email('Email invalido').optional().nullable().or(z.literal('')),
+  email: z.string().trim().email('Email inválido').optional().nullable().or(z.literal('')),
   departamento_id: z.coerce.number().int().min(1).optional().nullable(),
   ciudad_id: z.coerce.number().int().min(1).optional().nullable(),
   tarifa_base: z.coerce.number().min(0).default(22000),
@@ -51,7 +52,7 @@ export async function obtenerClientes(): Promise<ClienteB2B[]> {
 export async function crearCliente(input: ClienteInput) {
   const parsed = clienteSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos invalidos' };
+    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos inválidos' };
   }
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -81,11 +82,11 @@ export async function crearCliente(input: ClienteInput) {
 
 export async function actualizarCliente(id: string, input: ClienteInput) {
   if (!z.string().uuid().safeParse(id).success) {
-    return { ok: false as const, error: 'ID invalido' };
+    return { ok: false as const, error: 'ID inválido' };
   }
   const parsed = clienteSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos invalidos' };
+    return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Datos inválidos' };
   }
   const supabase = await createClient();
   const { error } = await supabase
@@ -106,4 +107,37 @@ export async function actualizarCliente(id: string, input: ClienteInput) {
   revalidatePath('/dashboard/clientes');
   revalidatePath('/dashboard');
   return { ok: true as const };
+}
+
+export async function vincularClienteManual(clienteId: string, authUserId: string) {
+  if (!z.string().uuid().safeParse(clienteId).success) {
+    return { ok: false as const, error: 'Cliente ID inválido' };
+  }
+  if (!z.string().uuid().safeParse(authUserId).success) {
+    return { ok: false as const, error: 'Auth user ID inválido' };
+  }
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('clientes')
+    .update({ auth_user_id: authUserId })
+    .eq('id', clienteId);
+  if (error) return { ok: false as const, error: error.message };
+  revalidatePath('/dashboard/clientes');
+  return { ok: true as const };
+}
+
+export async function obtenerClientesSinVincular(): Promise<ClienteB2B[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('clientes')
+    .select('*')
+    .eq('activo', true)
+    .is('auth_user_id', null)
+    .order('nombre', { ascending: true });
+
+  if (error) {
+    console.error('Error al obtener clientes sin vincular:', error);
+    return [];
+  }
+  return (data ?? []) as ClienteB2B[];
 }
