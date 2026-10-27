@@ -4,6 +4,29 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-27
+
+### Added
+- Fase 14: Portal Clientes B2B (en desarrollo).
+- Tabla `clientes.auth_user_id` vinculada a `auth.users`.
+- RLS: cliente B2B puede ver su propio registro y sus paquetes.
+- Server actions: `obtenerMiCliente`, `obtenerMisPaquetes`, `vincularClienteAUsuario`, `vincularClienteManual`, `obtenerClientesSinVincular`.
+- Portal login (`/portal/login`) y registro (`/portal/register`).
+- Dashboard del portal (`/portal`) con placeholder.
+- `loginPortal()` y `logoutPortal()` en `lib/auth-actions.ts`.
+- `PasswordInput` con toggle mostrar/ocultar (Eye/EyeOff).
+- Banner "Nueva versión disponible" cuando el SW se actualiza.
+- `APP_VERSION` en `lib/config.ts` (SemVer).
+
+### Changed
+- `public/sw.js`: `CACHE_VERSION` de `v1` a `v2`.
+- Links cruzados entre login operador y portal cliente.
+- Footer con `v0.9.0` en dashboards del operador.
+
+### Security
+- Policies RLS `clientes_self_read` y `paquetes_cliente_read`.
+- Vincular cliente a usuario: automático (email) o manual (admin).
+
 ## [0.8.0] - 2026-10-26
 
 ### Added
@@ -67,25 +90,3 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ### Added
 - Proyecto creado desde blueprint web-app.
-## [0.9.0] - 2026-10-27
-
-### Added
-- Fase 14: Portal Clientes B2B (en desarrollo).
-- Tabla `clientes.auth_user_id` vinculada a `auth.users`.
-- RLS: cliente B2B puede ver su propio registro y sus paquetes.
-- Server actions: `obtenerMiCliente`, `obtenerMisPaquetes`, `vincularClienteAUsuario`, `vincularClienteManual`, `obtenerClientesSinVincular`.
-- Portal login (`/portal/login`) y registro (`/portal/register`).
-- Dashboard del portal (`/portal`) con placeholder.
-- `loginPortal()` y `logoutPortal()` en `lib/auth-actions.ts`.
-- `PasswordInput` con toggle mostrar/ocultar (Eye/EyeOff).
-- Banner "Nueva versión disponible" cuando el SW se actualiza.
-- `APP_VERSION` en `lib/config.ts` (SemVer).
-
-### Changed
-- `public/sw.js`: `CACHE_VERSION` de `v1` a `v2`.
-- Links cruzados entre login operador y portal cliente.
-- Footer con `v0.9.0` en dashboards del operador.
-
-### Security
-- Policies RLS `clientes_self_read` y `paquetes_cliente_read`.
-- Vincular cliente a usuario: automático (email) o manual (admin).
