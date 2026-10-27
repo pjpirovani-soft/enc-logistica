@@ -4,7 +4,60 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [Unreleased]
+
+## [1.0.0] - 2026-10-28
+
+### Added
+- Fase 14: Portal Clientes B2B completo (login, dashboard, reportes, invitación).
+- Tabla clientes.auth_user_id vinculada a uth.users.
+- RLS: cliente B2B puede ver su propio registro y sus paquetes.
+- Server actions: obtenerMiCliente, obtenerMisPaquetes, incularClienteAUsuario, incularClienteManual, obtenerClientesSinVincular.
+- Portal login (/portal/login) y registro (/portal/register).
+- Dashboard del portal (/portal) con KPIs, filtros y lista de paquetes.
+- Reportes CSV descargables (/portal/reportes).
+- Route Handlers /api/reportes/portal/diario y /api/reportes/portal/mensual (filtrados por Ley 6534/2020).
+- PasswordInput con toggle mostrar/ocultar (Eye/EyeOff).
+- Banner "Nueva versión disponible" cuando el SW se actualiza.
+- APP_VERSION en lib/config.ts (SemVer).
+- Modal de invitación por WhatsApp (VincularClienteModal).
+- ClientesTable con columna "Portal" y botón "Invitar".
+- Pre-carga de email en /portal/register?email=X.
+- Documentación completa de Ley 6534/2020 en BUSINESS-LOGIC.md, ARCHITECTURE.md, SPEC.md.
+
+### Changed
+- public/sw.js: CACHE_VERSION de 1 a 2.
+- Links cruzados entre login operador y portal cliente.
+- Footer con 0.9.0 en dashboards del operador.
+
+### Security
+- Policies RLS clientes_self_read y paquetes_cliente_read.
+- Portal B2B NO muestra etirado_por, etirado_por_ci, observaciones (Ley 6534/2020).
+- Reportes del portal NO incluyen datos personales del destinatario.
+
 ## [0.9.0] - 2026-10-27
+
+### Added
+- Fase 14: Portal Clientes B2B (en desarrollo).
+- Tabla clientes.auth_user_id vinculada a uth.users.
+- RLS: cliente B2B puede ver su propio registro y sus paquetes.
+- Server actions: obtenerMiCliente, obtenerMisPaquetes, incularClienteAUsuario, incularClienteManual, obtenerClientesSinVincular.
+- Portal login (/portal/login) y registro (/portal/register).
+- Dashboard del portal (/portal) con lista de paquetes.
+- loginPortal() y logoutPortal() en lib/auth-actions.ts.
+- PasswordInput con toggle mostrar/ocultar (Eye/EyeOff).
+- Banner "Nueva versión disponible" cuando el SW se actualiza.
+- APP_VERSION en lib/config.ts (SemVer).
+
+### Changed
+- public/sw.js: CACHE_VERSION de 1 a 2.
+- Links cruzados entre login operador y portal cliente.
+- Footer con 0.9.0 en dashboards del operador.
+
+### Security
+- Policies RLS clientes_self_read y paquetes_cliente_read.
+- Vincular cliente a usuario: automático (email) o manual (admin).
+- Portal B2B NO muestra etirado_por, etirado_por_ci ni observaciones (Ley 6534/2020).
 
 ### Added
 - Fase 14: Portal Clientes B2B (en desarrollo).

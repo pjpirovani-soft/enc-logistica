@@ -6,8 +6,9 @@
 //
 // Historial:
 // 0.8.0 - Fase 13 (reportes CSV)
-// 0.9.0 - Fase 14 (portal B2B) - en desarrollo
-export const APP_VERSION = '0.9.0';
+// 0.9.0 - Fase 14 (portal B2B) - desarrollo
+// 1.0.0 - Fase 14 (portal B2B) - MVP estable
+export const APP_VERSION = '1.0.0';
 
 export const CONTACTO = {
   telefono: '+595985294540',

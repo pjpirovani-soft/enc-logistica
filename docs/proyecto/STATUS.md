@@ -1,6 +1,6 @@
 # STATUS — ENC Logística
 
-**Actualizado:** 2026-10-26
+**Actualizado:** 2026-10-28
 
 ## Progreso
 
@@ -18,9 +18,11 @@
 - [x] Fase 12: Gestión de clientes B2B.
 - [x] Fase 13-bis: PWA + responsive mobile-first.
 - [x] Fase 13: Reportes por cliente (CSV diario + mensual).
+- [x] Fase 14-pre: Landing comercial pública con íconos lucide.
+- [x] Fase 14: Portal Clientes B2B (login, dashboard, reportes, invitación).
 
 ## Próximos 3 pasos
 
-1. **Fase 14:** Portal B2B (login separado para clientes, solo lectura).
-2. **Fase 14-pre:** Rediseñar landing pública `/` orientada a captación B2B (servicios, contacto, CTA). Redirect a `/dashboard` si autenticado.
-3. **Fase 15:** Facturación electrónica (SIFEN).
+1. **Fase 14.7 (opcional):** Google OAuth en portal B2B (1 clic de login).
+2. **Fase 15:** Facturación electrónica (SIFEN).
+3. **Fase 16:** Tracking público + política de privacidad + T&C.

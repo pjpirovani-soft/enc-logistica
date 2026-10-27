@@ -185,3 +185,22 @@
 - **Análisis:** el CVE solo es explotable si el código usa `z.array()` sin `.max()` o `.length()`. **La app no usa `z.array()`** en ningún schema (solo `z.object()`, `z.string()`, `z.number()`, `z.enum()`).
 - **Decisión:** NO migrar a Zod 4 ahora. El CVE no es explotable en la app. Migración a Zod 4 planificada para Fase 16.
 - **Acción:** documentado, sin cambios de código.
+
+## 2026-10-28 — Fase 14: Portal Clientes B2B
+
+- **Migración SQL (007):** `clientes.auth_user_id` FK a `auth.users`. Policies RLS `clientes_self_read` y `paquetes_cliente_read`.
+- **Server actions (app/actions/portal.ts):** `obtenerMiCliente`, `obtenerMisPaquetes`, `vincularClienteAUsuario`.
+- **Server actions (app/actions/clientes.ts):** `vincularClienteManual`, `obtenerClientesSinVincular`.
+- **Auth actions (lib/auth-actions.ts):** `loginPortal()` (redirige a `/portal`), `logoutPortal()` (redirige a `/portal/login`).
+- **UI del portal:**
+  - `/portal/login`: login separado con "Ir al panel interno" y "Registrate acá".
+  - `/portal/register`: registro con pre-carga de email (`?email=X`), vinculación automática.
+  - `/portal`: dashboard con KPIs + filtros + cards/tabla de paquetes.
+  - `/portal/reportes`: descarga CSV diario/mensual filtrado.
+- **Route Handlers del portal:** `/api/reportes/portal/diario` y `/api/reportes/portal/mensual` (sin datos sensibles).
+- **Ley 6534/2020:** documentación completa en `BUSINESS-LOGIC.md`, `ARCHITECTURE.md`, `SPEC.md`. Portal B2B NO muestra `retirado_por`, `retirado_por_ci`, `observaciones`.
+- **Invitación por WhatsApp:** `/dashboard/clientes` con columna "Portal" + botón "Invitar" + modal con email + link pre-armado.
+- **PasswordInput:** toggle Eye/EyeOff en 4 páginas.
+- **Fix SW:** `CACHE_VERSION` v1 → v2. Banner "Nueva versión disponible".
+- **APP_VERSION = 0.9.0** (SemVer).
+- **Commits:** 6b12b00 (login+register+placeholder), 85dcc94 (invitación WhatsApp), + anteriores.
