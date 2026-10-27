@@ -204,3 +204,16 @@
 - **Fix SW:** `CACHE_VERSION` v1 → v2. Banner "Nueva versión disponible".
 - **APP_VERSION = 0.9.0** (SemVer).
 - **Commits:** 6b12b00 (login+register+placeholder), 85dcc94 (invitación WhatsApp), + anteriores.
+
+## 2026-10-28 — Fase 16: Términos, Privacidad y Accesibilidad Legal
+
+- **Datos legales centralizados (lib/legal.ts):** titular Luciana Noelia Da Silva (RUC 8971446-6), contacto operativo Pedro José Pirovani, email y teléfono.
+- **Política de Privacidad (/privacidad):** 11 secciones basadas en Ley 6534/2020. Responsable, datos recolectados, finalidad, base legal, destinatarios, derechos del titular, seguridad, retención, modificaciones, contacto.
+- **Términos y Condiciones (/terminos):** 13 secciones basadas en Código Civil + Ley 4868/2013. Identificación del prestador, objeto, aceptación, servicios, límites, tarifas, responsabilidad, cobro contra entrega, reintento, protección de datos, vigencia, jurisdicción, contacto.
+- **Footer (components/Footer.tsx):** datos legales + links a /privacidad y /terminos. Usado en landing, portal B2B y dashboard.
+- **Checkbox de aceptación:** obligatorio en /register y /portal/register.
+- **Accesibilidad legal:** link "Privacidad" en header de landing (mobile). Footer en /portal y /dashboard.
+- **CLIENTE.md actualizado:** titular legal = Luciana, Pedro = programador + repartidor.
+- **BUSINESS-LOGIC.md actualizado:** roadmap legal (Fase 1 = RUC de Luciana, Fase 2 = definir titular cuando Pedro active RUC, Fase 3 = E.I.R.L./S.R.L.).
+- **RUC de Pedro (6628192-0):** en proceso de activación. Cuando esté activo, se decide si cambiar el titular o mantener Luciana.
+- **Commits:** 7dce360 (T&C + privacidad), 8b66a38 (links legales), c9253cb (contacto operativo).

@@ -4,7 +4,55 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-28
+
+### Added
+- Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020).
+- Página /privacidad con 11 secciones (responsable, datos, finalidad, derechos, seguridad, retención).
+- Página /terminos con 13 secciones (prestador, objeto, servicios, tarifas, responsabilidad, jurisdicción).
+- lib/legal.ts con datos legales centralizados (titular, RUC, contacto).
+- components/Footer.tsx con datos legales + links a /privacidad y /terminos.
+- Link "Privacidad" en header de landing (mobile).
+- Footer en /portal y /dashboard.
+- Checkbox de aceptación obligatorio en /register y /portal/register.
+- Documentación de Ley 6534/2020 en BUSINESS-LOGIC.md, ARCHITECTURE.md, SPEC.md.
+- Roadmap legal en CLIENTE.md: Fase 1 (RUC de Luciana), Fase 2 (definir titular), Fase 3 (E.I.R.L.).
+
+### Changed
+- Titular legal documentado: Luciana Noelia Da Silva (RUC 8971446-6).
+- Contacto operativo: Pedro José Pirovani (RUC 6628192-0 en activación).
+- BUSINESS-LOGIC.md actualizado con roadmap legal.
+
+### Security
+- Términos y Condiciones legalmente vinculantes.
+- Política de Privacidad basada en Ley 6534/2020.
+- Checkbox de aceptación en registros.
+
 ## [Unreleased]
+
+## [1.1.0] - 2026-10-28
+
+### Added
+- Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020).
+- Página /privacidad con 11 secciones (responsable, datos, finalidad, derechos, seguridad, retención).
+- Página /terminos con 13 secciones (prestador, objeto, servicios, tarifas, responsabilidad, jurisdicción).
+- lib/legal.ts con datos legales centralizados (titular, RUC, contacto).
+- components/Footer.tsx con datos legales + links a /privacidad y /terminos.
+- Link "Privacidad" en header de landing (mobile).
+- Footer en /portal y /dashboard.
+- Checkbox de aceptación obligatorio en /register y /portal/register.
+- Documentación de Ley 6534/2020 en BUSINESS-LOGIC.md, ARCHITECTURE.md, SPEC.md.
+- Roadmap legal en CLIENTE.md: Fase 1 (RUC de Luciana), Fase 2 (definir titular), Fase 3 (E.I.R.L.).
+
+### Changed
+- Titular legal documentado: Luciana Noelia Da Silva (RUC 8971446-6).
+- Contacto operativo: Pedro José Pirovani (RUC 6628192-0 en activación).
+- BUSINESS-LOGIC.md actualizado con roadmap legal.
+
+### Security
+- Términos y Condiciones legalmente vinculantes.
+- Política de Privacidad basada en Ley 6534/2020.
+- Checkbox de aceptación en registros.
 
 ## [1.0.0] - 2026-10-28
 

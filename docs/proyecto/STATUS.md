@@ -20,9 +20,10 @@
 - [x] Fase 13: Reportes por cliente (CSV diario + mensual).
 - [x] Fase 14-pre: Landing comercial pública con íconos lucide.
 - [x] Fase 14: Portal Clientes B2B (login, dashboard, reportes, invitación).
+- [x] Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020) + titular legal Luciana Da Silva + accesibilidad legal en footer.
 
 ## Próximos 3 pasos
 
 1. **Fase 14.7 (opcional):** Google OAuth en portal B2B (1 clic de login).
-2. **Fase 15:** Facturación electrónica (SIFEN).
-3. **Fase 16:** Tracking público + política de privacidad + T&C.
+2. **Fase 15:** Facturación electrónica (SIFEN) — cuando el RUC de Pedro esté activo o se cree la E.I.R.L.
+3. **Fase 17:** Tracking público para destinatario + email de notificación.
