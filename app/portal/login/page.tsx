@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { loginPortal } from '@/lib/auth-actions';
+import { PasswordInput } from '@/components/PasswordInput';
 import Link from 'next/link';
 
 export default function PortalLoginPage() {
@@ -36,7 +37,7 @@ export default function PortalLoginPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Contraseña</label>
-              <input name="password" type="password" required className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#E63946] focus:border-[#E63946]" />
+              <PasswordInput name="password" />
             </div>
             <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded-lg hover:bg-[#06192b] transition-colors">
               Ingresar

@@ -1,3 +1,14 @@
+// Versionado SemVer (https://semver.org):
+// MAJOR.MINOR.PATCH
+// - MAJOR: cambios incompatibles (rompen funcionalidad existente)
+// - MINOR: nueva funcionalidad compatible
+// - PATCH: bugfix compatible
+//
+// Historial:
+// 0.8.0 - Fase 13 (reportes CSV)
+// 0.9.0 - Fase 14 (portal B2B) - en desarrollo
+export const APP_VERSION = '0.9.0';
+
 export const CONTACTO = {
   telefono: '+595985294540',
   telefonoDisplay: '+595 985 294 540',

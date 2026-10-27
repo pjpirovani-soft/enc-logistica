@@ -1,7 +1,8 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { login } from '@/lib/auth-actions';
+import { PasswordInput } from '@/components/PasswordInput';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -32,13 +33,13 @@ export default function LoginPage() {
           <form action={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-              <input name="email" type="email" required className="mt-1 block w-full border border-gray-300 rounded p-2 focus:ring-[#E63946] focus:border-[#E63946]" />
+              <input name="email" type="email" required className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#E63946] focus:border-[#E63946]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Contraseña</label>
-              <input name="password" type="password" required className="mt-1 block w-full border border-gray-300 rounded p-2 focus:ring-[#E63946] focus:border-[#E63946]" />
+              <PasswordInput name="password" />
             </div>
-            <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded hover:bg-[#06192b] transition-colors">
+            <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded-lg hover:bg-[#06192b] transition-colors">
               Ingresar
             </button>
           </form>
@@ -46,6 +47,12 @@ export default function LoginPage() {
             ¿No tienes cuenta?{' '}
             <Link href="/register" className="text-[#E63946] font-bold hover:underline">
               Regístrate aquí
+            </Link>
+          </p>
+          <p className="mt-4 text-center text-xs text-gray-400">
+            ¿Sos cliente B2B?{' '}
+            <Link href="/portal/login" className="text-[#0A2540] hover:underline">
+              Ir al portal
             </Link>
           </p>
         </div>

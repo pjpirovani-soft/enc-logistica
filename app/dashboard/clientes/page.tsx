@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { obtenerClientes } from '@/app/actions/clientes';
 import { logout } from '@/lib/auth-actions';
 import { ClienteForm } from '@/components/ClienteForm';
+import { APP_VERSION } from '@/lib/config';
 
 export default async function ClientesPage() {
   const supabase = await createClient();
@@ -137,6 +138,7 @@ export default async function ClientesPage() {
             </>
           )}
         </div>
+        <p className="text-center text-xs text-gray-400 mt-8">ENC Logística v{APP_VERSION}</p>
       </div>
     </div>
   );

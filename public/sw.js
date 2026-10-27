@@ -5,7 +5,7 @@
 // NO cachea /dashboard ni datos dinámicos (network-only).
 // ============================================================
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_STATIC = `enc-static-${CACHE_VERSION}`;
 const CACHE_PAGES = `enc-pages-${CACHE_VERSION}`;
 

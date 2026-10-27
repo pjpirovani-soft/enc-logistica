@@ -1,7 +1,8 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { register } from '@/lib/auth-actions';
+import { PasswordInput } from '@/components/PasswordInput';
 import Link from 'next/link';
 
 export default function RegisterPage() {
@@ -39,13 +40,14 @@ export default function RegisterPage() {
           <form action={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-              <input name="email" type="email" required className="mt-1 block w-full border border-gray-300 rounded p-2 focus:ring-[#E63946] focus:border-[#E63946]" />
+              <input name="email" type="email" required className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#E63946] focus:border-[#E63946]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Contraseña</label>
-              <input name="password" type="password" required className="mt-1 block w-full border border-gray-300 rounded p-2 focus:ring-[#E63946] focus:border-[#E63946]" />
+              <PasswordInput name="password" minLength={6} />
+              <p className="text-xs text-gray-500 mt-1">Mínimo 6 caracteres.</p>
             </div>
-            <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded hover:bg-[#06192b] transition-colors">
+            <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded-lg hover:bg-[#06192b] transition-colors">
               Registrarse
             </button>
           </form>

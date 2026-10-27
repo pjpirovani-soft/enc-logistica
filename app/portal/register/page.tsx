@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { register, loginPortal } from '@/lib/auth-actions';
 import { vincularClienteAUsuario } from '@/app/actions/portal';
+import { PasswordInput } from '@/components/PasswordInput';
 import Link from 'next/link';
 
 export default function PortalRegisterPage() {
@@ -20,15 +21,11 @@ export default function PortalRegisterPage() {
       return;
     }
 
-    // Después del registro, intentar vincular automáticamente
-    // NOTA: si la confirmación de email está deshabilitada, el usuario ya está logueado.
-    // Si está habilitada, el usuario tiene que confirmar y volver a loguearse.
     const vinculacion = await vincularClienteAUsuario();
 
     if (vinculacion.ok) {
       setVinculado(true);
       setSuccess('¡Cuenta creada y vinculada! Redirigiendo al portal...');
-      // Redirigir al portal después de 1.5s
       setTimeout(() => {
         window.location.href = '/portal';
       }, 1500);
@@ -71,7 +68,7 @@ export default function PortalRegisterPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input name="password" type="password" required minLength={6} className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#E63946] focus:border-[#E63946]" />
+                <PasswordInput name="password" minLength={6} />
                 <p className="text-xs text-gray-500 mt-1">Mínimo 6 caracteres.</p>
               </div>
               <button type="submit" className="w-full bg-[#0A2540] text-white font-bold p-3 rounded-lg hover:bg-[#06192b] transition-colors">
