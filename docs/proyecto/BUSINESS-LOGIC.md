@@ -181,3 +181,42 @@ Si un destinatario solicita acceso, rectificación o cancelación de sus datos:
 - [ ] Términos y condiciones del servicio.
 - [ ] Formulario de consentimiento para el checkout del cliente B2B.
 - [ ] Email de notificación al destinatario informando que sus datos fueron compartidos.
+
+## Flujo de invitación al portal B2B
+
+### Cómo un cliente B2B obtiene acceso al portal
+
+**Requisito:** el cliente debe tener `email` cargado en la tabla `clientes`.
+
+**Pasos:**
+
+1. **Operador (vos) carga el cliente** en `/dashboard/clientes` con email.
+2. **Operador clic "Invitar"** → abre WhatsApp con mensaje pre-armado:
+   - Incluye el email del cliente.
+   - Incluye link `https://enc-logistica.vercel.app/portal/register?email=X`.
+3. **Cliente clic en el link** → formulario de registro con email pre-cargado.
+4. **Cliente completa contraseña** → `signUp()` en Supabase Auth.
+5. **Vinculación automática:** `vincularClienteAUsuario()` busca `clientes.email === user.email`. Si coincide, vincula `clientes.auth_user_id = user.id`.
+6. **Cliente redirige a `/portal`** → ve sus paquetes y reportes.
+
+**Si el cliente se registró con otro email:**
+- Ve mensaje "Tu email no coincide con ningún cliente registrado. Contactanos."
+- **Fix manual:** el operador edita el email del cliente en `/dashboard/clientes` (2 clics) con el email que el cliente usó. **La próxima vez que el cliente entre a `/portal`, la vinculación es automática.**
+
+**Si el cliente no tiene email:**
+- El botón "Invitar" muestra advertencia: "Este cliente no tiene email registrado. Editá el cliente y agregá un email."
+- **Fix:** el operador edita el cliente, agrega email, guarda. Después puede invitar.
+
+### Ventajas del flujo
+
+- ✅ **Cero UUIDs manuales.**
+- ✅ **Cero idas a Supabase Auth.**
+- ✅ **Cero copy-paste.**
+- ✅ Usa el email como identificador único (estándar en la industria).
+- ✅ Funciona con cualquier proveedor de email (Gmail, Hotmail, Yahoo, corporativo).
+
+### Fase 14.7 (próxima sesión)
+
+- [ ] Agregar "Continuar con Google" en `/portal/login` y `/portal/register`.
+- [ ] Configurar Google OAuth en Supabase (requiere Google Cloud Console).
+- [ ] Agregar "Continuar con Apple" (requiere Apple Developer Program, USD 99/año).

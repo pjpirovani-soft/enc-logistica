@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { register, loginPortal } from '@/lib/auth-actions';
+import { useState, useEffect } from 'react';
+import { register } from '@/lib/auth-actions';
 import { vincularClienteAUsuario } from '@/app/actions/portal';
 import { PasswordInput } from '@/components/PasswordInput';
 import Link from 'next/link';
@@ -10,6 +10,16 @@ export default function PortalRegisterPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [vinculado, setVinculado] = useState(false);
+  const [emailInicial, setEmailInicial] = useState('');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get('email');
+    if (emailParam) {
+      setEmailInicial(emailParam);
+    }
+  }, []);
 
   async function handleSubmit(formData: FormData) {
     setError('');
@@ -61,7 +71,13 @@ export default function PortalRegisterPage() {
             <form action={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <input name="email" type="email" required className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#E63946] focus:border-[#E63946]" />
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  defaultValue={emailInicial}
+                  className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#E63946] focus:border-[#E63946]"
+                />
                 <p className="text-xs text-gray-500 mt-1">
                   Usá el mismo email que le diste a ENC Logística para contratar el servicio.
                 </p>
