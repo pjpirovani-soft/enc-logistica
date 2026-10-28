@@ -13,3 +13,8 @@ next-env.d.ts
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# Logo base64 temporal (para generar PDF)
+logo-base64.txt
+logo-oficial-base64.txt
+
