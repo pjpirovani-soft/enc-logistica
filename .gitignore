@@ -18,3 +18,7 @@ tsconfig.tsbuildinfo
 logo-base64.txt
 logo-oficial-base64.txt
 
+
+# Logos temporales para PDF
+docs/pdf/logo-oficial-300px.png
+
