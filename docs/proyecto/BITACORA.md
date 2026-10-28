@@ -217,3 +217,9 @@
 - **BUSINESS-LOGIC.md actualizado:** roadmap legal (Fase 1 = RUC de Luciana, Fase 2 = definir titular cuando Pedro active RUC, Fase 3 = E.I.R.L./S.R.L.).
 - **RUC de Pedro (6628192-0):** en proceso de activación. Cuando esté activo, se decide si cambiar el titular o mantener Luciana.
 - **Commits:** 7dce360 (T&C + privacidad), 8b66a38 (links legales), c9253cb (contacto operativo).
+
+## 2026-10-28 — Fix Crítico: RLS en departamentos y ciudades
+- **Problema:** El formulario de paquetes mostraba los selectores de departamento/ciudad vacíos. El script en consola confirmó que React no podía leer la base de datos.
+- **Causa:** En la migración 005 se crearon las tablas `departamentos` y `ciudades`, pero se olvidó agregar las políticas RLS de SELECT para usuarios autenticados.
+- **Solución:** Migración 008 con las políticas `Permitir lectura a autenticados` para ambas tablas.
+- **Verificación:** Script en consola confirmó que las políticas están activas y los catálogos ya cargan en el dashboard.
