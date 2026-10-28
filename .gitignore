@@ -22,3 +22,9 @@ logo-oficial-base64.txt
 # Logos temporales para PDF
 docs/pdf/logo-oficial-300px.png
 
+
+# Archivos temporales
+docs/dump-documentacion-completa.txt
+test-results/
+playwright-report/
+
