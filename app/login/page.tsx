@@ -49,6 +49,9 @@ export default function LoginPage() {
               Regístrate aquí
             </Link>
           </p>
+          <p className="mt-2 text-center text-xs text-gray-400">
+            ¿Sos cliente B2B? <Link href="/portal/login" className="text-[#0A2540] font-bold hover:underline">Ir al portal B2B</Link>
+          </p>
           <p className="mt-4 text-center text-xs text-gray-400">
             ¿Sos cliente B2B?{' '}
             <Link href="/portal/login" className="text-[#0A2540] hover:underline">
