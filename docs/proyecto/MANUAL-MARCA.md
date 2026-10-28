@@ -33,6 +33,6 @@ Para mantener la consistencia, los archivos se han estandarizado de la siguiente
 - `alas-blanca-transparente.png`: Alas en color blanco, fondo transparente. **Uso:** Login y Registro (fondos oscuros).
 - `alas-azul-transparente.png`: Alas en color azul marino, fondo transparente. **Uso:** Dashboard (fondo claro).
 - `alas-azul-fondo-blanco.png`: Alas en azul marino, fondo blanco. **Uso:** Reserva o documentos impresos.
-- `logo-oficial.png`: Logo completo (alas + texto ENC + Logística). **Uso:** Correos electrónicos, facturas o material impreso.
+- `logo-oficial.png`: Logo completo (alas + texto ENC + LogÃ­stica). **Uso:** Correos electrÃ³nicos, facturas o material impreso.
 
-**Regla:** Siempre usar la versión que tenga el mayor contraste posible con el fondo de la pantalla.
+**Regla:** Siempre usar la versiÃ³n que tenga el mayor contraste posible con el fondo de la pantalla.

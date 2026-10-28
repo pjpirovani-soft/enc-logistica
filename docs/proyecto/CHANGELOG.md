@@ -4,191 +4,37 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-10-28
+## [1.2.0] - 2026-10-28
 
 ### Added
-- Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020).
-- Página /privacidad con 11 secciones (responsable, datos, finalidad, derechos, seguridad, retención).
-- Página /terminos con 13 secciones (prestador, objeto, servicios, tarifas, responsabilidad, jurisdicción).
-- lib/legal.ts con datos legales centralizados (titular, RUC, contacto).
-- components/Footer.tsx con datos legales + links a /privacidad y /terminos.
-- Link "Privacidad" en header de landing (mobile).
-- Footer en /portal y /dashboard.
-- Checkbox de aceptación obligatorio en /register y /portal/register.
-- Documentación de Ley 6534/2020 en BUSINESS-LOGIC.md, ARCHITECTURE.md, SPEC.md.
-- Roadmap legal en CLIENTE.md: Fase 1 (RUC de Luciana), Fase 2 (definir titular), Fase 3 (E.I.R.L.).
+- Fase 17: Formulario de Contacto en `/contacto` (con API Route `/api/contacto`).
+- Centro de Ayuda para Operador (`/dashboard/ayuda`) y Cliente B2B (`/portal/ayuda`).
+- Links cruzados entre los logins de Operador (`/login`) y Cliente (`/portal/login`).
+- Botón "Solicitar Cotización" en la landing (redirige a `/contacto`).
+- CTA visual de WhatsApp y Email al final del PDF comercial.
 
-### Changed
-- Titular legal documentado: Luciana Noelia Da Silva (RUC 8971446-6).
-- Contacto operativo: Pedro José Pirovani (RUC 6628192-0 en activación).
-- BUSINESS-LOGIC.md actualizado con roadmap legal.
-
-### Security
-- Términos y Condiciones legalmente vinculantes.
-- Política de Privacidad basada en Ley 6534/2020.
-- Checkbox de aceptación en registros.
-
-## [Unreleased]
+### Fixed
+- RLS en tablas `departamentos` y `ciudades` (Migración 008) para permitir lectura a usuarios autenticados.
+- Diseño de KPI cards en el PDF comercial.
+- Eliminación de caracteres extraños y sección duplicada en el PDF.
 
 ## [1.1.0] - 2026-10-28
 
 ### Added
 - Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020).
-- Página /privacidad con 11 secciones (responsable, datos, finalidad, derechos, seguridad, retención).
-- Página /terminos con 13 secciones (prestador, objeto, servicios, tarifas, responsabilidad, jurisdicción).
-- lib/legal.ts con datos legales centralizados (titular, RUC, contacto).
-- components/Footer.tsx con datos legales + links a /privacidad y /terminos.
-- Link "Privacidad" en header de landing (mobile).
-- Footer en /portal y /dashboard.
-- Checkbox de aceptación obligatorio en /register y /portal/register.
-- Documentación de Ley 6534/2020 en BUSINESS-LOGIC.md, ARCHITECTURE.md, SPEC.md.
-- Roadmap legal en CLIENTE.md: Fase 1 (RUC de Luciana), Fase 2 (definir titular), Fase 3 (E.I.R.L.).
-
-### Changed
-- Titular legal documentado: Luciana Noelia Da Silva (RUC 8971446-6).
-- Contacto operativo: Pedro José Pirovani (RUC 6628192-0 en activación).
-- BUSINESS-LOGIC.md actualizado con roadmap legal.
-
-### Security
-- Términos y Condiciones legalmente vinculantes.
-- Política de Privacidad basada en Ley 6534/2020.
-- Checkbox de aceptación en registros.
+- Página /privacidad con 11 secciones y /terminos con 13 secciones.
+- lib/legal.ts con datos legales centralizados (Luciana, RUC, contacto).
+- components/Footer.tsx con datos legales y links.
 
 ## [1.0.0] - 2026-10-28
 
 ### Added
 - Fase 14: Portal Clientes B2B completo (login, dashboard, reportes, invitación).
-- Tabla clientes.auth_user_id vinculada a uth.users.
-- RLS: cliente B2B puede ver su propio registro y sus paquetes.
-- Server actions: obtenerMiCliente, obtenerMisPaquetes, incularClienteAUsuario, incularClienteManual, obtenerClientesSinVincular.
-- Portal login (/portal/login) y registro (/portal/register).
-- Dashboard del portal (/portal) con KPIs, filtros y lista de paquetes.
-- Reportes CSV descargables (/portal/reportes).
-- Route Handlers /api/reportes/portal/diario y /api/reportes/portal/mensual (filtrados por Ley 6534/2020).
-- PasswordInput con toggle mostrar/ocultar (Eye/EyeOff).
-- Banner "Nueva versión disponible" cuando el SW se actualiza.
-- APP_VERSION en lib/config.ts (SemVer).
-- Modal de invitación por WhatsApp (VincularClienteModal).
-- ClientesTable con columna "Portal" y botón "Invitar".
-- Pre-carga de email en /portal/register?email=X.
-- Documentación completa de Ley 6534/2020 en BUSINESS-LOGIC.md, ARCHITECTURE.md, SPEC.md.
-
-### Changed
-- public/sw.js: CACHE_VERSION de 1 a 2.
-- Links cruzados entre login operador y portal cliente.
-- Footer con 0.9.0 en dashboards del operador.
-
-### Security
-- Policies RLS clientes_self_read y paquetes_cliente_read.
-- Portal B2B NO muestra etirado_por, etirado_por_ci, observaciones (Ley 6534/2020).
-- Reportes del portal NO incluyen datos personales del destinatario.
+- Tabla clientes.auth_user_id vinculada a auth.users.
+- RLS para el portal B2B.
 
 ## [0.9.0] - 2026-10-27
 
 ### Added
 - Fase 14: Portal Clientes B2B (en desarrollo).
-- Tabla clientes.auth_user_id vinculada a uth.users.
-- RLS: cliente B2B puede ver su propio registro y sus paquetes.
-- Server actions: obtenerMiCliente, obtenerMisPaquetes, incularClienteAUsuario, incularClienteManual, obtenerClientesSinVincular.
-- Portal login (/portal/login) y registro (/portal/register).
-- Dashboard del portal (/portal) con lista de paquetes.
 - loginPortal() y logoutPortal() en lib/auth-actions.ts.
-- PasswordInput con toggle mostrar/ocultar (Eye/EyeOff).
-- Banner "Nueva versión disponible" cuando el SW se actualiza.
-- APP_VERSION en lib/config.ts (SemVer).
-
-### Changed
-- public/sw.js: CACHE_VERSION de 1 a 2.
-- Links cruzados entre login operador y portal cliente.
-- Footer con 0.9.0 en dashboards del operador.
-
-### Security
-- Policies RLS clientes_self_read y paquetes_cliente_read.
-- Vincular cliente a usuario: automático (email) o manual (admin).
-- Portal B2B NO muestra etirado_por, etirado_por_ci ni observaciones (Ley 6534/2020).
-
-### Added
-- Fase 14: Portal Clientes B2B (en desarrollo).
-- Tabla `clientes.auth_user_id` vinculada a `auth.users`.
-- RLS: cliente B2B puede ver su propio registro y sus paquetes.
-- Server actions: `obtenerMiCliente`, `obtenerMisPaquetes`, `vincularClienteAUsuario`, `vincularClienteManual`, `obtenerClientesSinVincular`.
-- Portal login (`/portal/login`) y registro (`/portal/register`).
-- Dashboard del portal (`/portal`) con lista de paquetes.
-- `loginPortal()` y `logoutPortal()` en `lib/auth-actions.ts`.
-- `PasswordInput` con toggle mostrar/ocultar (Eye/EyeOff).
-- Banner "Nueva versión disponible" cuando el SW se actualiza.
-- `APP_VERSION` en `lib/config.ts` (SemVer).
-
-### Changed
-- `public/sw.js`: `CACHE_VERSION` de `v1` a `v2`.
-- Links cruzados entre login operador y portal cliente.
-- Footer con `v0.9.0` en dashboards del operador.
-
-### Security
-- Policies RLS `clientes_self_read` y `paquetes_cliente_read`.
-- Vincular cliente a usuario: automático (email) o manual (admin).
-- Portal B2B NO muestra `retirado_por`, `retirado_por_ci` ni `observaciones` (Ley 6534/2020).
-
-## [0.8.0] - 2026-10-26
-
-### Added
-- Fase 13: Reportes por cliente B2B (CSV diario + mensual).
-- app/api/reportes/diario/route.ts (CSV diario por cliente y fecha).
-- app/api/reportes/mensual/route.ts (CSV mensual por cliente y mes).
-- app/dashboard/reportes/page.tsx (UI con tabs y selector).
-- components/ReporteForm.tsx (form con tabs, selector cliente, input fecha/mes, botón descarga).
-- Link "Reportes" en headers de /dashboard y /dashboard/clientes.
-
-### Security
-- Route Handlers con autenticación obligatoria (401 sin sesión).
-- RLS de paquetes filtra por user_id.
-
-### Calculations
-- tarifa_flete = suma de tarifa_flete de entregados.
-- monto_cobro = suma de monto_cobro de entregados.
-- comision_cobro = monto_cobro × comision_pct / 100.
-- importe_a_rendir = monto_cobro - comision_cobro.
-- importe_a_facturar = tarifa_flete (NO descuenta comisión sin regla explícita).
-
-## [0.7.0] - 2026-10-26
-
-### Added
-- Fase 13-bis: PWA + responsive mobile-first.
-- public/sw.js (Service Worker: network-first público, cache-first assets, network-only dashboard).
-- app/offline/page.tsx (fallback offline).
-- components/ServiceWorkerRegister.tsx (registro SW).
-- components/InstallPrompt.tsx (banner solo mobile).
-- Cards en mobile, tabla en desktop.
-
-### Security
-- Service Worker NO cachea /dashboard ni /api.
-
-## [0.6.0] - 2026-10-26
-
-### Added
-- Fase 13-bis (inicio): PWA básica.
-
-## [0.5.0] - 2026-10-26
-
-### Added
-- Fase 12: Gestión clientes B2B.
-
-## [0.4.0] - 2026-10-26
-
-### Added
-- Fase 11: Multi-origen.
-
-## [0.3.0] - 2026-10-26
-
-### Added
-- Fase 10: tarifa/cobrado/devuelto + tope 2 intentos.
-
-## [0.2.0] - 2026-10-25
-
-### Added
-- Fase 9: Ausente + reintento.
-
-## [0.1.0] - 2026-10-24
-
-### Added
-- Proyecto creado desde blueprint web-app.

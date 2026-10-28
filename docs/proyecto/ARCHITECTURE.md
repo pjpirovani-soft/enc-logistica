@@ -76,6 +76,8 @@
 - 004_fase10_tarifa_cobrado_devuelto.sql (Fase 10)
 - 005_fase11_multi_origen.sql (Fase 11)
 - 006_fase12_clientes_comision_intentos.sql (Fase 12)
+- 007_fase14_portal_b2b.sql (Fase 14)
+- 008_fix_rls_departamentos_ciudades.sql (Fase 17)
 
 ## PWA
 - **Manifest:** public/site.webmanifest (name, short_name, theme_color #0A2540, start_url /dashboard, icons).
