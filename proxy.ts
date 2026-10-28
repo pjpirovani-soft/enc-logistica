@@ -36,6 +36,28 @@ export function proxy(request: NextRequest) {
     }
   }
 
+    // Proteger el login del operador (máx 5 intentos por minuto)
+  if (request.nextUrl.pathname === '/login' && request.method === 'POST') {
+    const ip = request.headers.get('x-forwarded-for') || 'anonymous';
+    const now = Date.now();
+    const windowData = rateLimitMap.get(ip + '_login');
+
+    if (windowData) {
+      if (now - windowData.lastReset > WINDOW_MS) {
+        rateLimitMap.set(ip + '_login', { count: 1, lastReset: now });
+      } else if (windowData.count >= 5) {
+        return NextResponse.json(
+          { error: 'Demasiados intentos de inicio de sesión. Esperá 1 minuto.' },
+          { status: 429 }
+        );
+      } else {
+        windowData.count++;
+      }
+    } else {
+      rateLimitMap.set(ip + '_login', { count: 1, lastReset: now });
+    }
+  }
+
   return NextResponse.next();
 }
 
