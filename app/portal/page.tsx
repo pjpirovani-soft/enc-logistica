@@ -53,6 +53,12 @@ export default async function PortalPage({
             >
               Reportes
             </Link>
+            <Link
+              href="/portal/ayuda"
+              className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
+            >
+              Ayuda
+            </Link>
             <form action={logoutPortal}>
             <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">
               Cerrar Sesión
@@ -116,6 +122,12 @@ export default async function PortalPage({
               className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
             >
               Reportes
+            </Link>
+            <Link
+              href="/portal/ayuda"
+              className="text-sm font-semibold text-[#0A2540] hover:text-[#E63946] px-3 py-2 rounded-lg border border-[#0A2540]"
+            >
+              Ayuda
             </Link>
             <form action={logoutPortal}>
             <button className="text-sm font-semibold text-gray-500 hover:text-[#E63946]">

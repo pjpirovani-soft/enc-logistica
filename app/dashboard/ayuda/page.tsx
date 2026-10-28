@@ -1,0 +1,39 @@
+import Link from 'next/link';
+import { ArrowLeft, BookOpen, MessageCircle } from 'lucide-react';
+
+export default function AyudaOperadorPage() {
+  return (
+    <div className="min-h-screen bg-[#F1F3F5] p-4 md:p-8 text-black">
+      <div className="max-w-3xl mx-auto">
+        <header className="flex items-center gap-4 mb-8 pb-4 border-b-2 border-[#E63946]">
+          <Link href="/dashboard" className="text-[#0A2540] hover:text-[#E63946]">
+            <ArrowLeft className="w-6 h-6" />
+          </Link>
+          <h1 className="text-2xl font-bold text-[#0A2540]">Centro de Ayuda — Operador</h1>
+        </header>
+
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+          <section>
+            <h2 className="text-xl font-bold text-[#0A2540] mb-2 flex items-center gap-2">
+              <BookOpen className="w-5 h-5" /> Guías rápidas
+            </h2>
+            <p className="text-gray-600 mb-4">Los manuales completos están en la carpeta del proyecto, pero acá tenés un resumen:</p>
+            <ul className="list-disc list-inside text-gray-700 space-y-2">
+              <li><strong>Crear un paquete:</strong> Llená los campos en el dashboard y hacé clic en "Agregar a la Ruta".</li>
+              <li><strong>Entregar:</strong> Hacé clic en "Entregar", pedí el nombre y C.I. del que recibe, y confirmá.</li>
+              <li><strong>Cliente Ausente:</strong> Hacé clic en "Ausente" y dejá una observación si es necesario.</li>
+              <li><strong>Reintentar:</strong> Si el paquete está "Ausente", podés reintentar la entrega al día siguiente.</li>
+            </ul>
+          </section>
+
+          <section className="border-t pt-6">
+            <h2 className="text-xl font-bold text-[#0A2540] mb-2 flex items-center gap-2">
+              <MessageCircle className="w-5 h-5" /> ¿Necesitás más ayuda?
+            </h2>
+            <p className="text-gray-600">Escribinos a <a href="mailto:contacto.enclogistica@gmail.com" className="text-[#E63946] font-bold">contacto.enclogistica@gmail.com</a> o al WhatsApp +595 985 294 540.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
