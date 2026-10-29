@@ -242,3 +242,9 @@
   - Evidencia: 4 envíos al formulario, el 4to devolvió 429. Tabla `rate_limits` registra IP con 3 intentos.
 - **H-05 (Logs contacto):** Corregido.
 - **H-06 (Zod CVE):** Mitigado por superficie nula (no usamos `z.array()`).
+
+## 2026-10-29 — Cierre Definitivo de Auditoría (v1.3.1)
+
+- **H-04 (Rate Limiting):** Implementado en Server Actions (`lib/auth-actions.ts`). Ahora es imposible de saltar.
+- **H-06 (Zod):** Actualizado a `3.25.76` en `package.json`.
+- **Verificación:** Commit `7634145` pusheado. Tests E2E pasando.

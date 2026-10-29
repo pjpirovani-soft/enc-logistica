@@ -4,6 +4,16 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-10-29
+
+### Fixed
+- **H-04 (Rate Limiting):** Movido el límite de intentos directamente a las Server Actions (`login` y `loginPortal`) en `lib/auth-actions.ts`. Esto evita la evasión vía POST y usa la tabla `rate_limits` en Supabase.
+- **H-06 (Zod):** Actualizado `package.json` a `"zod": "3.25.76"` (versión parcheada).
+
+### Added
+- Migración 011: Tabla `rate_limits` para Rate Limiting persistente.
+
+
 ## [1.3.0] - 2026-10-29
 
 ### Added
