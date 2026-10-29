@@ -1,6 +1,6 @@
 # STATUS — ENC Logística
 
-**Actualizado:** 2026-10-28
+**Actualizado:** 2026-10-29
 
 ## Progreso
 
@@ -16,9 +16,10 @@
 - [x] Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020).
 - [x] Fase 17: Formulario de Contacto, Centro de Ayuda, Links Cruzados y CTA final en PDF.
 - [x] Fase 18: Tests E2E (Playwright) + Rate Limiting (Seguridad).
+- [x] Fase 19: Auditoría de Seguridad (Trigger admin, RLS clientes, logs de contacto).
 
 ## Próximos 3 pasos
 
-1. **Fase 14.7 (opcional):** Google OAuth en portal B2B (1 clic de login).
-2. **Fase 15:** Facturación electrónica (SIFEN) — cuando el RUC de Pedro esté activo.
-3. **Fase 19:** Tracking público para destinatario + email de notificación.
+1. **Validación con clientes reales:** Enviar PDF y usar el formulario de contacto.
+2. **Fase 14.7 (opcional):** Google OAuth en portal B2B (1 clic de login).
+3. **Fase 20:** Tracking público para destinatario + email de notificación.
