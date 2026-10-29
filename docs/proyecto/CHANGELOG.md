@@ -4,6 +4,13 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-10-29
+
+### Fixed
+- **H-04 (Rate Limiting):** Implementación atómica con función RPC en PostgreSQL (`check_rate_limit`). IP real vía `next/headers`. Fail-closed.
+- **H-06 (Zod):** Documentado como riesgo aceptado (no parcheado). Mitigación por superficie de ataque nula.
+
+
 ## [1.3.1] - 2026-10-29
 
 ### Fixed

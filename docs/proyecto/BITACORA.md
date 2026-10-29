@@ -248,3 +248,8 @@
 - **H-04 (Rate Limiting):** Implementado en Server Actions (`lib/auth-actions.ts`). Ahora es imposible de saltar.
 - **H-06 (Zod):** Actualizado a `3.25.76` en `package.json`.
 - **Verificación:** Commit `7634145` pusheado. Tests E2E pasando.
+
+## 2026-10-29 — Cierre Técnico Definitivo (H-04 y H-06)
+
+- **H-04 (Rate Limiting):** Implementado con función RPC `check_rate_limit` en PostgreSQL (atómica con `FOR UPDATE`). Usa IP real vía `next/headers`. Fail-closed si la DB falla.
+- **H-06 (Zod):** **Riesgo Aceptado.** No es un parche. El CVE se corrige en Zod 4.6.6. La app usa Zod 3.25.76 (no actualizable por incompatibilidad). **Mitigación:** La app no usa `z.array()` en ningún esquema, por lo que la ruta vulnerable no es alcanzable. Documentado como deuda técnica para futura migración a Zod 4.
