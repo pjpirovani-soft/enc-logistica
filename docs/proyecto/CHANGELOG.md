@@ -4,6 +4,25 @@ Formato basado en Keep a Changelog y Semantic Versioning.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-10-29
+
+### Added
+- Fase 19: Cierre de Auditoría de Seguridad.
+- Migración 009: Corrección del Trigger `handle_new_user` (ahora asigna `repartidor` en vez de `admin`).
+- Migración 010: Revocación de privilegios excesivos en tablas de catálogo.
+- Migración 011: Tabla `rate_limits` para Rate Limiting distribuido en Supabase.
+- Rate Limiting real en API Route de contacto (HTTP 429 después de 3 intentos).
+- Tests E2E con Playwright (5 tests de humo).
+
+### Fixed
+- H-01: Trigger de asignación de rol admin.
+- H-02: Políticas RLS permisivas en tabla `clientes`.
+- H-03: Privilegios de `anon` y `authenticated` en tablas.
+- H-04: Rate Limiting en Login (ahora persistente, no en memoria).
+- H-05: Logs de contacto con datos personales.
+- H-06: Documentado como "Mitigado por superficie nula" (Zod sin `z.array()`).
+
+
 ## [1.2.0] - 2026-10-28
 
 ### Added

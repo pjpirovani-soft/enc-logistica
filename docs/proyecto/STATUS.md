@@ -16,7 +16,7 @@
 - [x] Fase 16: Términos y Condiciones + Política de Privacidad (Ley 6534/2020).
 - [x] Fase 17: Formulario de Contacto, Centro de Ayuda, Links Cruzados y CTA final en PDF.
 - [x] Fase 18: Tests E2E (Playwright) + Rate Limiting (Seguridad).
-- [x] Fase 19: Auditoría de Seguridad (Trigger admin, RLS clientes, logs de contacto).
+- [x] Fase 19: Auditoría de Seguridad (Cierre total: Trigger admin, RLS clientes, privilegios, rate limiting distribuido).
 
 ## Próximos 3 pasos
 

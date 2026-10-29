@@ -232,3 +232,13 @@
 - **H-04 (Matcher login):** Corregido. El `proxy.ts` ahora protege `/login` y `/portal/login`.
 - **H-05 (Logs contacto):** Corregido. Ya no se imprimen datos personales.
 - **H-06 (Zod CVE):** Falso positivo. El CVE solo afecta a `z.array()`, y la app no usa arrays. Migración a Zod 4 pospuesta por incompatibilidad.
+
+## 2026-10-29 — Cierre de Auditoría de Seguridad (Fase 19)
+
+- **H-01 (Trigger admin):** Corregido. Migración 009.
+- **H-02 (RLS clientes):** Corregido. Políticas limpias.
+- **H-03 (Privilegios catálogos):** Corregido. Migración 010.
+- **H-04 (Rate Limiting):** Corregido. Migración 011 + API Route con Supabase.
+  - Evidencia: 4 envíos al formulario, el 4to devolvió 429. Tabla `rate_limits` registra IP con 3 intentos.
+- **H-05 (Logs contacto):** Corregido.
+- **H-06 (Zod CVE):** Mitigado por superficie nula (no usamos `z.array()`).
