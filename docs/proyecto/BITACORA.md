@@ -223,3 +223,12 @@
 - **Causa:** En la migración 005 se crearon las tablas `departamentos` y `ciudades`, pero se olvidó agregar las políticas RLS de SELECT para usuarios autenticados.
 - **Solución:** Migración 008 con las políticas `Permitir lectura a autenticados` para ambas tablas.
 - **Verificación:** Script en consola confirmó que las políticas están activas y los catálogos ya cargan en el dashboard.
+
+## 2026-10-29 — Auditoría de Seguridad (Fase 19)
+
+- **H-01 (Trigger admin):** Corregido. Ahora asigna `repartidor` por defecto.
+- **H-02 (RLS clientes):** Corregido. Solo el operador gestiona la tabla; el cliente B2B solo ve su registro.
+- **H-03 (Privilegios catálogos):** Corregido. Se revocaron permisos de escritura en `ciudades` y `departamentos`.
+- **H-04 (Matcher login):** Corregido. El `proxy.ts` ahora protege `/login` y `/portal/login`.
+- **H-05 (Logs contacto):** Corregido. Ya no se imprimen datos personales.
+- **H-06 (Zod CVE):** Falso positivo. El CVE solo afecta a `z.array()`, y la app no usa arrays. Migración a Zod 4 pospuesta por incompatibilidad.
