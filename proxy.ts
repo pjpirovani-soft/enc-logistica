@@ -62,5 +62,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/api/contacto',
+  matcher: ['/api/contacto', '/login', '/portal/login'],
 };

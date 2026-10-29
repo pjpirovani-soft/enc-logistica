@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Simulamos el envío de correo (en el futuro se conecta con Nodemailer o Resend)
-    console.log('📧 Email de contacto recibido:', parsed.data);
+    console.log('📧 Nueva solicitud de contacto recibida (datos omitidos por seguridad)');
     console.log('📤 Enviando a: contacto.enclogistica@gmail.com');
 
     return NextResponse.json({ ok: true });
