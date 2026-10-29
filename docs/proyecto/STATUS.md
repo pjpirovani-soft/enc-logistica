@@ -18,6 +18,8 @@
 - [x] Fase 18: Tests E2E (Playwright) + Rate Limiting (Seguridad).
 - [x] Fase 19: Auditoría de Seguridad (Cierre total: Trigger, RLS, Privilegios, Rate Limiting en Server Actions, Zod actualizado).
 
+- [x] Fase 20: Auditoría de Seguridad (Cierre con reservas documentado en ACTA_CIERRE_AUDITORIA.md).
+
 ## Próximos 3 pasos
 
 1. **Validación con clientes reales:** Enviar PDF y usar el formulario de contacto.

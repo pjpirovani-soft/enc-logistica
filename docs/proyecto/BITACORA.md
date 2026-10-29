@@ -253,3 +253,11 @@
 
 - **H-04 (Rate Limiting):** Implementado con función RPC `check_rate_limit` en PostgreSQL (atómica con `FOR UPDATE`). Usa IP real vía `next/headers`. Fail-closed si la DB falla.
 - **H-06 (Zod):** **Riesgo Aceptado.** No es un parche. El CVE se corrige en Zod 4.6.6. La app usa Zod 3.25.76 (no actualizable por incompatibilidad). **Mitigación:** La app no usa `z.array()` en ningún esquema, por lo que la ruta vulnerable no es alcanzable. Documentado como deuda técnica para futura migración a Zod 4.
+
+## 2026-10-29 — Cierre de Auditoría de Seguridad (v1.3.2)
+
+- Se emitió el **Acta de Cierre Técnico con Reservas** (guardada en `ACTA_CIERRE_AUDITORIA.md`).
+- **H-04 (Rate Limiting):** Corrección informada con prueba de concurrencia (5 intentos permitidos, 5 bloqueados). Función SQL atómica (`DO NOTHING`) y RPC en `auth-actions.ts`.
+- **H-06 (Zod):** Riesgo aceptado y documentado.
+- **H-01, H-02, H-03:** Pendientes de validación en producción (requieren acceso a Supabase).
+- **Nota:** ChatGPT (auditor) reconoció la evidencia local y emitió el acta con reservas.
